@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<!-- <meta content="width=720,  user-scalable=yes,target-densitydpi=device-dpi" name="viewport" /> -->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="css/k3.css">
+	<script src="js/sha1.js"></script>
+	<script src="js/agentphone.js"></script>
+    <title></title>
+</head>
+<body>
+     <div id = "tableContainer">        
+	<table id="k3table" border="1" cellpadding="0" cellspacing="0">
+	
+	<caption id="tablecaption">
+
+			<div id="logoImgContainer">
+			<!-- <img id="logoImg" src="images/logo.png"> -->
+			<!-- 初始化时就加载图片,改为在js中加-->
+			<img id="logoImg"> 
+			</div>
+				<span id="titleDiv"></span>
+				<div id="progressContainer" >
+					<div id="styleTitleDiv" ></div>
+					<div id="countDownDiv">
+						<div id="progressDiv"></div>
+						<div id="timeDiv"></div>	
+		
+				</div>
+			</div>	
+		</caption> 	
+		<tbody>
+			<tr id="bodyContentTr">				
+				<div id="overdueDiv">
+					<div id="CoverImgDiv"></div>
+				</div>					
+			</tr>
+		</tbody>	
+	</table>
+	</div>
+	
+	
+	
+	<div id="debugdiv">
+	</div>
+	<!-- 显示免责声明及报装电话信息 -->
+	<div id="tipsInfoDiv"></div>
+	<!--快彩表头-->
+	<div id="kuaicaiDiv"></div>
+	
+	
+	<!-- 显示登陆及进度信息 -->
+	<div id="loginContainerDiv">
+		<div id="loginDiv">
+			<table id="loginContentTable">
+				<col width="224" /><col width="336" />
+				<tbody>
+					<tr>
+						<td>请输入账号：</td>
+						<td> <input id="uidInpupt" name="uidInpupt" type="text" style="width:100%;height:50px;font-size:36px;"/> </td>
+					</tr>
+					<tr>
+						<td colspan=2> <div style="margin-top: -25px;"><button id ="commitButton" type="button" name="commitButton">登陆</button></div></td>
+					</tr>
+					<tr>
+						<td>
+							<div id="agentURLdiv"></div>
+							<div id="agentInfodiv"></div>
+							<div  id="agentPhoneDiv"></div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<div id="loginProgressTipsDiv">
+				正在验证授权，请稍后
+			</div>
+		</div>
+	</div>
+
+	<!-- 用于显示到期及异常登录信息 -->
+	<div id="floatDiv">
+		<div id="floatDivContent">
+			<p id="systemEventDetail"></p>
+		</div>
+	</div>
+	
+	<!-- 用于显示旋转时信息 -->
+	<div id="orientationDivContainer">
+		<p id="orientationDivContent">
+		页面旋转，数据正在加载中，请稍后。
+		</p>
+	</div>
+	
+	<script src="js/k3.js"></script>
+</body>
+
+</html>
+
+	
