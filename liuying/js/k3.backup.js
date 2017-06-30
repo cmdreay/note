@@ -1,4 +1,3 @@
-//服务器调试地址：101.200.168.40：8000  admin 123456
 //进度条可以使用宽度加固定向右布局的方式确定  多个通知可以拼接为一个字符串使用marquue实现滚动
 //备注：宽度计算时需要关注各个宽度的计算规则一致，尤其是涉及到冗余像素的处理时，内嵌表格的宽度计算与表头宽度应该一致，以保证数据准确
 //table高度计算是应当考虑表头caption的高度是否计算到table的高度中，火狐是计算到里面的，但是chrom等并没有计算到里面。这就导致了内容cell区域总是不能被正确的处理问题，体现在cell与其内部的table等使用相同的高度，但是cell比table高，因为table的caption多余的高度给了table而导致的。
@@ -11,7 +10,7 @@
 // /localStorage.sn localStorage.osn (orignsn)
 //1008修改登录方式 localStorage.uidInitialized  after success login,never changed,except clean cache data or no valid (not exist),then need user reinput uid 
 
-var gVersion= "3.426"
+var gVersion= "<b><span style='color:red;font-size:18px;'>恭喜您已升级到新版本！</span></b>"
 var holdSnChar="******"
 
 var updateTableContentFlag=false
@@ -73,11 +72,10 @@ var trendCellWidth =12
 
 var prevAreaPrizeNumMax = 33  //ssq; 35for dlt
 var backAreaPrizeNumMax = 16 //ssq; 12for dlt
-var prevAreaPrizeNumLength = 5 //ssq 6;5 for dlt
+var prevAreaPrizeNumLength = 5 //ssq ;6 for dlt
 
 var tableCaption   //2rows height
 var titleDiv //显示标题
-
 
 
 var bodyContentTr
@@ -122,7 +120,7 @@ function getMaxMinVal(dataArray)
 		if(min > dataArray[i])
 			min = dataArray[i]
 	}
-	return [max,min]
+	return [max,min]   
 }
 //////////////////////////////
 //计算统计最大最小值 结束
@@ -133,31 +131,30 @@ function createInnerTable(cellWidth,cellHeight,rows,wRedundantPixels,cols,hRedun
 	var mtable = document.createElement("table")
 	mtable.style.width = (cellWidth+1)*cols+Math.min(cols,wRedundantPixels)+1+'px'  //n+1 pixels
 	mtable.style.height=(cellHeight+1)*rows+Math.min(rows,hRedundantPixels)+1+'px' 
-	
-	//console.log("createInnerTable mtable.style.height"+mtable.style.height)
+	//innertable.width=(单元格的宽度+1px//因为实际单元格宽度+1px)*列数+冗余
+	// console.log("createInnerTable mtable.style.height"+mtable.style.height)
 	mtable.cellspacing=0 
 	mtable.cellpadding=0
-	mtable.border=1
+	mtable.border=1   //边框
 	//mtable.style.borderWidth="1px"
 	if(clsName != undefined)
 		mtable.className = clsName
-	else
+	else                      //默认类名是innerTable
 		mtable.className = "innerTable"
-	//init col
-	// console.log(cols);
+	//init col  col用于同步于单元格
 	for(var i=0;i<cols;i++)
 	{
 		var col = document.createElement("col")
 		if(wRedundantPixels>0)
 		{
 			col.width=cellWidth+1 //just content width
-			wRedundantPixels--
+			wRedundantPixels--    //冗余的像素大小被各个单元格平分
 		}
 		else
 		{
 			col.width=cellWidth
 		}
-		mtable.appendChild(col)
+		// mtable.appendChild(col)
 	}
 	return mtable;
 }
@@ -202,7 +199,7 @@ function showSysEventFloat(type,info)
 			//systemEventTitle.innerHTML="您的帐号即将到期，请联系 <br /><span style='color:red;font-size:32px;font-style:italic;'>"+agentphoneNumber+"</span><br />续费，以免影响您的使用！"  
 			accountExpiringtipsVisible=true
 			break;
-			//1008修改登录方式 add
+       //1008修改登录方式 add
 		case 5:
 			networkErrorTipsVisible = true
 			break;
@@ -241,7 +238,8 @@ var intervalTime; //min
 
 function initDurationOfDay()
 {
-	var timeArray = curLotteryTypeStartTime.split(":")
+	var timeArray = curLotteryTypeStartTime.split(":");
+	// console.log(timeArray);
 	var sec=9*60*60;
 	if(timeArray.length==2)
 		sec=parseInt(timeArray[0])*60*60+parseInt(timeArray[1]*60)
@@ -253,9 +251,12 @@ function initDurationOfDay()
 	intervalStartSecondOfDay =18*60*60+40*60  //陕西快乐十分 开奖时间间隔问题
 	intervalEndSecondOfDay = 20*60*60//+parseInt(timeArray[1]*60)+parseInt(timeArray[2])
 	intervalTime = parseInt(curLotteryTypeInterval)  //sec
+	console.log(intervalTime);
+	// console.log(curLotteryTypeDataList);
 	if (curLotteryTypeName.indexOf("陕西快乐十")>=0) { //陕西快乐十分 时间问题
 		var qihaoString = curLotteryTypeDataList[curLotteryTypeDataList.length-1].issue
 		var qihao = parseInt(qihaoString.substring(qihaoString.length-2))
+		// console.log(qihao);
 		if (qihao<=11) {
 			intervalTime = intervalTime+6
 		}else{
@@ -263,7 +264,8 @@ function initDurationOfDay()
 		}
 	}
 	endSecondOfDay = startSecondOfDay+curLotteryTypeMaxPeriod*intervalTime //sec
-	//console.log("endSecondOfDay:"+endSecondOfDay)
+	console.log("endSecondOfDay:"+endSecondOfDay)
+
 }
 
 function getK11x5LeftTime()
@@ -326,7 +328,7 @@ function updateTitleAreaInfo()
 		titleDiv.innerHTML="重庆幸运农场"
 	}else if(curLotteryTypeName.indexOf("大乐透")>=0)
 	{
-		titleDiv.innerHTML="超级大乐透开奖号码	走势图"
+		titleDiv.innerHTML="超级大乐透开奖号码走势图"
 	}else if(curLotteryTypeName.indexOf("七星彩")>=0)
 	{
 		titleDiv.innerHTML="七星彩开奖号码走势图"
@@ -365,14 +367,16 @@ function updateTitleAreaInfo()
 
 //logo size 129*58
 
-var kuaicaiDiv//0510 快彩 表头部分
+
 function adjustTitleDivSize()
 {
-	if(kuaicaiDiv==undefined)//0510 快彩 表头部分 将原来的覆盖
-	{
-		kuaicaiDiv = document.getElementById("kuaicaiDiv")
-	}
+	
 	if (curLotteryTypeStyleName.indexOf("快彩")>=0) {	
+		var kuaicaiDiv//0510 快彩 表头部分
+		if(kuaicaiDiv==undefined)//0510 快彩 表头部分 将原来的覆盖
+		{
+			kuaicaiDiv = document.getElementById("kuaicaiDiv")
+		}
 		kuaicaiDiv.style.display = "block"
 		// kuaicaiDiv.style.width=tableWidth-2+"px" //not contain border
 		if (curOrientation==="port") {
@@ -387,7 +391,7 @@ function adjustTitleDivSize()
 		kuaicaiDiv.style.fontSize="20px"
 		kuaicaiDiv.innerHTML = curLotteryTypeName+"&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp"+"左右键切换页面"+"&nbsp&nbsp&nbsp&nbsp"+"<span style=font-size:17px>"+agentphoneNumber+"</span>"
 	}else{
-		kuaicaiDiv.style.display = "none"
+		document.getElementById("kuaicaiDiv").style.display = "none"
 	}
 
 	if(imgObj == undefined)
@@ -398,8 +402,9 @@ function adjustTitleDivSize()
 	if (curLotteryTypeStyleName.indexOf("快彩")>=0) {
 		imgObj.width=captionHeight
 	}else{
-		imgObj.width=Math.floor(captionHeight/58*129)
+		imgObj.width=Math.floor(captionHeight*2.22)   // captionHeight/58*129
 	}
+
 	if(logoImgContainer == undefined)//0510 原默认图片底色白色 改快彩版底色需变色
 	{
 		logoImgContainer = document.getElementById("logoImgContainer")
@@ -407,7 +412,7 @@ function adjustTitleDivSize()
 	 logoImgContainer.style.backgroundColor = "white"
 	
 	
-
+	 	// console.log(curLotteryTypeName);
 	if (curLotteryTypeName.indexOf("天津快乐十")>=0) {		
 		imgObj.src="images/tupiao.svg";
 		imgObj.style.marginLeft="65px";
@@ -576,9 +581,9 @@ function getDltLeftTime()
 	var curDate = new Date()
 	var curSecondOfDay=parseInt(curDate.getHours())*60*60+parseInt(curDate.getMinutes())*60+parseInt(curDate.getSeconds())
 	var dayOfWeek = parseInt(curDate.getDay())
-	var intervalSec//=2*24*60*60 //s
-	var effectTime
-	var dayDistance
+    var intervalSec//=2*24*60*60 //s
+    var effectTime
+    var dayDistance
 	if( ( 1*24*60*60+startSecondOfDay<= dayOfWeek*24*60*60+curSecondOfDay) && (dayOfWeek*24*60*60+curSecondOfDay<3*24*60*60+startSecondOfDay) ) 
 	{
 		dayDistance = 2
@@ -593,7 +598,7 @@ function getDltLeftTime()
 	else if( ( 6*24*60*60+startSecondOfDay<= dayOfWeek*24*60*60+curSecondOfDay) ) 
 	{
 		dayDistance = 2
-		//console.log("111111getDltLeftTime:dayDistance:")
+		console.log("111111getDltLeftTime:dayDistance:")
 		effectTime=2*24*60*60+startSecondOfDay-curSecondOfDay
 	}
 	else if(dayOfWeek*24*60*60+curSecondOfDay<24*60*60+startSecondOfDay)
@@ -928,12 +933,6 @@ function updateAdvertising()//广告
 	//console.log(adSwitchInterval)
 	//setTimeout(updateAdvertising,adSwitchInterval*1000)
 }
-
-// function yiLouLunBo(){
-// 	drawYCK3StaticTable(); //快3遗漏2
-// 	return;
-// }
-
 var divObjyl = document.createElement("div")//之前divObj是一个全局变量,复用率较高,现在轮播需要分开单独.
 function createYiLouArea(){
 	var tmpName = curLotteryTypeName	
@@ -962,16 +961,6 @@ function createYiLouArea(){
 	divObjyl.appendChild(yltable)
 	
 	if (tmpName.indexOf("快3") >= 0) {
-		// if (yilou2&&adList.length>1) {  //test  遗漏1和遗漏2轮播   
-		// 	yiLouLunBo()
-		// }else if (yilou2&&adList.length===1) {
-		// 	// if (lotteryConfig.config.ads[i].name === "遗漏2") {
-		// 	drawYCK3StaticTable(); //快3遗漏2
-		// 	return;
-		// }else if (yilou2===false&&yilouAreaEnable===true) {
-		// 	drawK3StaticTable(); // 快3 遗漏
-		// 	return;
-		// }
 		for (var i = 0; i < adList.length; i++) {
 			if (lotteryConfig.config.ads[i].name === "遗漏2") {
 				drawYCK3StaticTable(); //快3遗漏2
@@ -1240,7 +1229,7 @@ function drawYCK3StaticTable() {
 				td.style.textAlign = "center"
 				td.style.height = (tableCellHeight - 2) + "px"
 				//td.style.fontSize = (tableCellHeight-6)+'px'
-				// console.log(tableCellHeight)
+				console.log(tableCellHeight)
 
 				 if (parseInt(destPrizeItemCount)<60) {
 				 	if (parseInt(destPrizeItemCount)<55){
@@ -1998,7 +1987,7 @@ function getCellHTMLk3(type,w,h,v){
 
 function getCellHTML(type,w,h,v,smallFlag,boldFlag,bigFlag,flag)
 {
-	var minVal = Math.min(w,h)
+    var minVal = Math.min(w,h)
 	if(type=="container")
 	{
 		if (flag==="YCbig") {
@@ -2017,12 +2006,7 @@ function getCellHTML(type,w,h,v,smallFlag,boldFlag,bigFlag,flag)
 			}			
 		}else if (flag==="titlesmall") {
 			return "<div class='"+type+"' style='width:"+(w-2)+"px;height:"+(h-2)+"px;line-height:"+(h-2)+"px;'>"+v+"</div>"
-		}
-		//快乐十分背景遗漏字体
-		// else if (flag==="k10yilou") {
-		// 	return "<div class='"+type+"' style='width:"+(w-2)+"px;height:"+(h-2)+"px;line-height:"+(h-2)+"px; font-size:"+(h-7)+"px;'>"+v+"</div>"	
-		// }
-		else{
+		}else{
 			return "<div class='"+type+"' style='width:"+(w-2)+"px;height:"+(h-2)+"px;line-height:"+(h-2)+"px; font-size:"+(h-2)+"px;'>"+v+"</div>"	
 		}
 	}
@@ -2080,14 +2064,11 @@ function getCellHTML(type,w,h,v,smallFlag,boldFlag,bigFlag,flag)
 
 function getRowsCount()
 {
-	console.log(notificationAreaEnable);
 	var initCount = showPrizeItemCount + reservedLines + 2  + 2 //reservedLines,2 header row,2table caption
 	if(notificationAreaEnable)  //in tfootArea
 		initCount += notifyRowsNum
 	if(advertisingAreaEnable && curOrientation=="port")  //in tfootArea
-	{
 		initCount += advertisingRowsNum
-	}
 	return initCount
 }
 
@@ -2103,188 +2084,185 @@ function getOutTableLines()
 }
 function adjustfySizeInfo()
 {
-	tableRowCount = getRowsCount()  
+	tableRowCount = getRowsCount()
 	var tableRowLinesPixels=getOutTableLines()
-	// console.log(tableRowCount);
-	// console.log(tableRowLinesPixels);
-	console.log(tableHeight);
+
 	tableCellHeight = Math.floor((tableHeight-tableRowCount-tableRowLinesPixels*2) / tableRowCount)
-	console.log(tableRowCount);
 	heightRedundantPixels = (tableHeight-tableRowCount-tableRowLinesPixels*2)%tableRowCount 
-	console.log(curHeightRedundantPixels);
+	
 	captionHeight = (tableCellHeight)*2+1  // 2 rows height
 	tableCaption.style.height = captionHeight+'px'
 	
 	tableColumCount =0
 	var innerTableCount=0  // 用于记录表格边框占据的像素，会将表格撑大超出
-	console.log(componentList)
+	// console.log(componentList);
 	for(i in componentList)
 	{
 		switch(componentList[i])
 		{
-			case "1":
+			// case "1":
 			case 1:
-			case "prizeIssue":
+			// case "prizeIssue":
 				tableColumCount += 1
 				innerTableCount++
 				break;
-			case "2":
+			// case "2":
 			case 2:
-			case "prizeNum":
+			// case "prizeNum":
 				tableColumCount += prizeNumLength
 				innerTableCount++
 				break;
-			case "3":
+			// case "3":
 			case 3:
-			case "prev3PrizeNum":
+			// case "prev3PrizeNum":
 				tableColumCount +=3
 				innerTableCount++
 				break;
-			case "4":
+			// case "4":
 			case 4:
-			case "prev3PrizeNumTrend":
+			// case "prev3PrizeNumTrend":
 				//tableColumCount +=3*prizeNumAvailableNumCount
 				trendCellCount += 3*prizeNumAvailableNumCount
 				innerTableCount+=3
 				break;
-			case "5":
+			// case "5":
 			case 5:
-			case "prizeNumDistribution":
+			// case "prizeNumDistribution":
 				tableColumCount +=prizeNumAvailableNumCount
 				innerTableCount++
 				break;
-			case "6":
+			// case "6":
 			case 6:
-			case "prizeNumDistributionAsBall":
+			// case "prizeNumDistributionAsBall":
 			    tableColumCount +=prizeNumAvailableNumCount
 				innerTableCount++
 				break;
-			case "7":
+			// case "7":
 			case 7:
-			case "prev3PrizeNumDistribution":
+			// case "prev3PrizeNumDistribution":
 			    tableColumCount +=prizeNumAvailableNumCount
 				innerTableCount++
 				break;
-			case "8":
+			// case "8":
 			case 8:
-			case "prizeNumRepeatTimes":
+			// case "prizeNumRepeatTimes":
 				tableColumCount +=1
 				innerTableCount++
 				break;	
-			case "9":
+			// case "9":
 			case 9:
-			case "prev3PrizeNumRepeatTimes":
+			// case "prev3PrizeNumRepeatTimes":
 				tableColumCount +=1
 				innerTableCount++
 				break;	
 			
-			case "10":
+			// case "10":
 			case 10:
-			case "prev3PrizeNumSum":
+			// case "prev3PrizeNumSum":
 				tableColumCount +=1
 				innerTableCount++
 				break;				
 			
-			case "11":
+			// case "11":
 			case 11:
-			case "prev3PrizeNumDistance":
+			// case "prev3PrizeNumDistance":
 				tableColumCount +=1
 				innerTableCount++
 				break;
-			case "12":
+			// case "12":
 			case 12:
-			case "prizeNumDistance":
+			// case "prizeNumDistance":
 				tableColumCount +=1
 				innerTableCount++
 				break;
-			case "13":
+			// case "13":
 			case 13:
-			case "prev3PrizeNumDistanceTrend":
+			// case "prev3PrizeNumDistanceTrend":
 				//tableColumCount +=prizeNumMax-3+1  
 				trendCellCount  +=(prizeNumMax-3+1) 
 				innerTableCount++
 				break;
-			case "14":
+			// case "14":
 			case 14:
-			case "prizeNumDistanceTrend":
+			// case "prizeNumDistanceTrend":
 				//tableColumCount += prizeNumMax-prizeNumLength+1 
 				trendCellCount += (prizeNumMax-prizeNumLength+1) 
 				innerTableCount++
 				break;			
-			case "15":
+			// case "15":
 			case 15:
-			case "prev3PrizeNumWith012Trend":
+			// case "prev3PrizeNumWith012Trend":
 				//tableColumCount += 3*(prizeNumAvailableNumCount)
 				trendCellCount += (3*(prizeNumAvailableNumCount+3))
 				innerTableCount+=6
 				break;
 			
-			case "16":
+			// case "16":
 			case 16:
-			case "testNum":
+			// case "testNum":
 				tableColumCount += 3
 				innerTableCount++
 				break;
-			case "17":
+			// case "17":
 			case 17:
-			case "prevAreaPrizeNumDistribution":
+			// case "prevAreaPrizeNumDistribution":
 				tableColumCount += prevAreaPrizeNumMax
 				innerTableCount++
 				break;
 			
 			
-			case "18":
+			// case "18":
 			case 18:
-			case "backAreaPrizeTrend":
+			// case "backAreaPrizeTrend":
 				trendCellCount += backAreaPrizeNumMax
 				innerTableCount++
 				break;
-			case "19":
+			// case "19":
 			case 19:
-			case "backAreaPrizeNumDistribution":
+			// case "backAreaPrizeNumDistribution":
 				tableColumCount += backAreaPrizeNumMax
 				innerTableCount++
 				break;
-			case "20":
+			// case "20":
 			case 20:
-			case "k3prizeNumSumTrend":////快3 基本版  高级版 
+			// case "k3prizeNumSumTrend":////快3 基本版  高级版 
 			            trendCellCount  +=16//k3和值走势
 			            innerTableCount++
 			            break;
 			
-			case "21":
+			// case "21":
 			case 21:
-			case "k3GJprizeNumSum012Trend"://快3  高级版
+			// case "k3GJprizeNumSum012Trend"://快3  高级版
 			            trendCellCount  +=3//快3和值012路	
 			            innerTableCount++       
 			            break;			
 
-			case "22":
+			// case "22":
 			case 22:
-			case "prizeNumFormTrend"://快3高级 金七乐2 
+			// case "prizeNumFormTrend"://快3高级 金七乐2 
 			                 trendCellCount+= 4
 			                 innerTableCount++
 			                break;
 
 			case 23:
-			case "23":
-			case "k3prizeNum"://快3 珍藏版 高级版 基本版
+			// case "23":
+			// case "k3prizeNum"://快3 珍藏版 高级版 基本版
 			             tableColumCount +=prizeNumLength
 				 innerTableCount++
 				break;	
 			            
 				
 
-			case "24":
+			// case "24":
 			case 24:
-			case "k3prizeNumDistribution"://快3 珍藏版 高级版 基本版
+			// case "k3prizeNumDistribution"://快3 珍藏版 高级版 基本版
 				tableColumCount +=prizeNumAvailableNumCount
 				 innerTableCount++
 				break;
 
-			case "25":
+			// case "25":
 			case 25:
-			case "k3JBPrizeNumTrend"://快3 基本
+			// case "k3JBPrizeNumTrend"://快3 基本
 					if(curLotteryTypeName.indexOf("481")>=0){
 						trendCellCount += 4*prizeNumAvailableNumCount
 						innerTableCount +=4
@@ -2295,509 +2273,513 @@ function adjustfySizeInfo()
 			        
 			        break;
 
-			case "26":
+			// case "26":
 			case 26:
-			case "k3GaojiprizeNumDistanceTrend"://快3 高级				
+			// case "k3GaojiprizeNumDistanceTrend"://快3 高级				
 				trendCellCount += 6				
 				 innerTableCount++
 				break;
 
-			case "27":
+			// case "27":
 			case 27:
-			case "k3ZCprizeNumSumTrend"://快3 珍藏
+			// case "k3ZCprizeNumSumTrend"://快3 珍藏
 			            trendCellCount  +=16		
 			             innerTableCount++	            
 			            break;
-			case "28":
+			// case "28":
 			case 28:
-			case "k3ZChistoryPrizeIssue"://快3 珍藏
+			// case "k3ZChistoryPrizeIssue"://快3 珍藏
 				tableColumCount += 1
 				 innerTableCount++
 				break;
-			case "29":
+			// case "29":
 			case 29:
-			case "k3ZChistoryPrizeNum"://快3 珍藏历史
+			// case "k3ZChistoryPrizeNum"://快3 珍藏历史
 				tableColumCount +=prizeNumLength
 				 innerTableCount++
 				break;	
 
 			
 
-			case "30":
+			// case "30":
 			case 30:
-			case "aver4PrizeNumDistribution"://快10四分区
+			// case "aver4PrizeNumDistribution"://快10四分区
 			          tableColumCount +=20
 			           innerTableCount++
 			          break;
-			case "31":
+			// case "31":
 			case 31:
-			case "k10Aver2Prev3PrizeNum"://快10 四分区 前三中奖号
+			// case "k10Aver2Prev3PrizeNum"://快10 四分区 前三中奖号
 			          tableColumCount +=3
 			           innerTableCount++
 			          break;
 
 
-			 case "32":
+			//  case "32":
 			 case 32:
-			 case "k10Aver4PrizeNumRepeatTimes"://快10 四分区
+			//  case "k10Aver4PrizeNumRepeatTimes"://快10 四分区
 			            tableColumCount += 1
 			             innerTableCount++
 			            break;
 
-			case "33":
+			// case "33":
 			case 33:
-			case "aver2PrizeNumDistribution"://快10 二分区
+			// case "aver2PrizeNumDistribution"://快10 二分区
 			          tableColumCount +=20
 			           innerTableCount++
 			          break;	
 
-			case "34":
+			// case "34":
 			case 34:
-			case "k10Aver2PrizeNumRepeatTimes": //快10 二分区
+			// case "k10Aver2PrizeNumRepeatTimes": //快10 二分区
 				tableColumCount +=1
 				 innerTableCount++
 				break;	
-			 case "35":
+			//  case "35":
 			 case 35:
-			 case "k10PrizeNumOdd"://快10 二分区 奇数
+			//  case "k10PrizeNumOdd"://快10 二分区 奇数
 			            tableColumCount += 1
 			             innerTableCount++
 			            break;	
-			case "36":
+			// case "36":
 			case 36:
-			case "k10Aver2Prev3PrizeNum"://快10 二分区
+			// case "k10Aver2Prev3PrizeNum"://快10 二分区
 			             tableColumCount +=3
 				 innerTableCount++
 				break;		
 
-			case "37":
+			// case "37":
 			 case 37:
-			 case "k10PrizeIssue"://快10  二分区  四分区
+			//  case "k10PrizeIssue"://快10  二分区  四分区
 			            tableColumCount += 1
 			            innerTableCount++
 			            break;
 
-			case "38":
+			// case "38":
 			case 38:
-			case "k10GreenPrizeNumDistance"://快10 绿色
+			// case "k10GreenPrizeNumDistance"://快10 绿色
 			          tableColumCount +=1
 			           innerTableCount++
 			          break;
 
-			case "39":
+			// case "39":
 			 case 39:
-			 case "k10GreenPrizeNumOdd"://奇数 快10绿色版
+			//  case "k10GreenPrizeNumOdd"://奇数 快10绿色版
 			            tableColumCount += 1
 			            innerTableCount++
 			            break;
 
-			case "40":
+			// case "40":
 			case 40:
-			case "k10prev3GreenPrizeNum"://快10 绿色版
+			// case "k10prev3GreenPrizeNum"://快10 绿色版
 			          tableColumCount +=3	  
 			          innerTableCount++        
 			          break;
 
-			case "41":
+			// case "41":
 			case 41:
-			case "k10GreenPrizeIssue"://快10 绿色版
+			// case "k10GreenPrizeIssue"://快10 绿色版
 			          tableColumCount +=1        
 			          innerTableCount++  
 			          break;
 
 
-			case "42":
+			// case "42":
 			case 42:
-			case "k10GreenPrizeNumDistribution"://快10 绿色版
+			// case "k10GreenPrizeNumDistribution"://快10 绿色版
 			          tableColumCount +=20       
 			           innerTableCount++
 			          break;
 
-			case "43":
+			// case "43":
 			case 43:
-			case "k10GreenPrizeNumRepeatTimes"://快10 绿色版
+			// case "k10GreenPrizeNumRepeatTimes"://快10 绿色版
 			          tableColumCount +=1
 			          innerTableCount++
 			          break;		             
 
-	                            case "44":
+	                            // case "44":
 			case 44:
-			case "prev3j7PrizeNumTrend"://金七乐1前区走势
+			// case "prev3j7PrizeNumTrend"://金七乐1前区走势
 			          trendCellCount += 3*prizeNumAvailableNumCount			
 			          innerTableCount+=3
 			          break;
 
-			case "45":
+			// case "45":
 			case 45:
-			case "j7l1lprizeNumDistribution":// 金七乐1前区开奖
+			// case "j7l1lprizeNumDistribution":// 金七乐1前区开奖
 				tableColumCount +=prizeNumAvailableNumCount				
 				 innerTableCount++
 				break;
 
-	                           case "46":
+	                        //    case "46":
 			case 46:
-			case "j7l1prizeNumSum"://金七乐1
+			// case "j7l1prizeNumSum"://金七乐1
 			          tableColumCount +=1		
 			           innerTableCount++          
 			          break;
 
-			 case "47":
+			//  case "47":
 			 case 47:
-			 case "j7l1prizeNumOdd"://金七乐1
+			//  case "j7l1prizeNumOdd"://金七乐1
 			          tableColumCount += 1			       
 			           innerTableCount++
 			            break;
 
-			case "48":
+			// case "48":
 			case 48:
-			case "j7l1PrizeNum"://金七乐1
+			// case "j7l1PrizeNum"://金七乐1
 			          tableColumCount +=4	          
 			           innerTableCount++
 			          break;
 
-			case "49":
+			// case "49":
 			case 49:
-			case "j72prizeNumDistribution"://金七乐　２
+			// case "j72prizeNumDistribution"://金七乐　２
 				tableColumCount +=prizeNumAvailableNumCount
 				 innerTableCount++
 				break;
 
-			case "50":
+			// case "50":
 			case 50:
-			case "j7l2PrizeNum"://金七乐2
+			// case "j7l2PrizeNum"://金七乐2
 			         tableColumCount +=4	        
 			           // trendCellCount += 3
 			           innerTableCount++  
 			          break;
 
-			case "51":
+			// case "51":
 			case 51:
-			case "j7backAreaPrizeNum012Val": //金七乐1   2
+			// case "j7backAreaPrizeNum012Val": //金七乐1   2
 			         tableColumCount +=3	
 			            // trendCellCount += 3     
 			           innerTableCount++ 
 			          break;
-			case "52":
+			// case "52":
 			case 52:
-			case "j7l2prizeNumDistanceTrend"://金七乐2 跨度走势
+			// case "j7l2prizeNumDistanceTrend"://金七乐2 跨度走势
 				//tableColumCount +=prizeNumMax-3+1  
 				trendCellCount += prizeNumMax-prizeNumMin+1 
 				 innerTableCount++
 				break;
 
-			case "53":
+			// case "53":
 			case 53:
-			case "j7l2prizeNumSumTrend"://金七乐2 和值走势图
+			// case "j7l2prizeNumSumTrend"://金七乐2 和值走势图
 			             trendCellCount  +=21		
 			             innerTableCount++      
 			            break;
 			case 54:
-			case "54":
-			case "k12Qianprev3PrizeNumDistance"://快乐 12  前置版 前三跨度
+			// case "54":
+			// case "k12Qianprev3PrizeNumDistance"://快乐 12  前置版 前三跨度
 				tableColumCount +=1
 			              innerTableCount++
 				break;	
 
-			case "55":
+			// case "55":
 			case 55:
-			case "k12QianPrev3prizeNumSum"://快乐12 前置版 前三中奖号和值
+			// case "k12QianPrev3prizeNumSum"://快乐12 前置版 前三中奖号和值
 			          tableColumCount +=1
 			            innerTableCount++       
 			          break;
 
-			case "56":
+			// case "56":
 			case 56:
-			case "k12prizeNumDistribution"://快乐12  前置版 后置版
+			// case "k12prizeNumDistribution"://快乐12  前置版 后置版
 			             tableColumCount +=prizeNumAvailableNumCount
 				 innerTableCount++
 			           break;
 
 
-			case "57":
+			// case "57":
 			case 57:
-			case "k12prev3PrizeNumTrend"://快乐12  前置版 后置版
+			// case "k12prev3PrizeNumTrend"://快乐12  前置版 后置版
 				//tableColumCount +=3*prizeNumAvailableNumCount
 				trendCellCount += 3*prizeNumAvailableNumCount
 				 innerTableCount+=3
 				break;	
 			
-			case "58":
+			// case "58":
 			case 58:
-			case "k12HouprizeNumSum"://快乐12 后置版 全部中奖号和值
+			// case "k12HouprizeNumSum"://快乐12 后置版 全部中奖号和值
 			          tableColumCount +=1	
 			          innerTableCount++	          
 			          break;		
 	
-			case "59":
+			// case "59":
 			case 59:
-			case "k12HouprizeNumDistance"://快乐12 后置版 全部中奖号跨度
+			// case "k12HouprizeNumDistance"://快乐12 后置版 全部中奖号跨度
 			          tableColumCount +=1	
 			           innerTableCount++	          
 			          break;
 
-			case "60":
+			// case "60":
 			case 60:
-			case "k12prizeNumRepeatTimes"://快乐12 前置版后置版
+			// case "k12prizeNumRepeatTimes"://快乐12 前置版后置版
 			          tableColumCount +=1
 			          innerTableCount++      
 			          break;       
-	               	case "61":
+	               	// case "61":
 			case 61:
-			case "k12JDhistoryPrizeIssue"://快12 经典历史
+			// case "k12JDhistoryPrizeIssue"://快12 经典历史
 				tableColumCount += 1
 				 innerTableCount++
 				break;			
 
-			 case "62":
+			//  case "62":
 			case 62:
-			case "k12JDprizeNum"://快乐12 经典 开奖顺序
+			// case "k12JDprizeNum"://快乐12 经典 开奖顺序
 				tableColumCount +=prizeNumLength
 				 innerTableCount++
 				break;	
 
-			case "63":
+			// case "63":
 			case 63:
-			case "k12JDhistoryPrizeNum"://快乐12 经典  历史数据
+			// case "k12JDhistoryPrizeNum"://快乐12 经典  历史数据
 				tableColumCount +=prizeNumLength
 				 innerTableCount++
 				break;	
 
-			case "64":
+			// case "64":
 			case 64:
-			case "k12JDPrizeNumSum": ///快乐12 经典 全部中奖号 和值
+			// case "k12JDPrizeNumSum": ///快乐12 经典 全部中奖号 和值
 				tableColumCount +=1
 				 innerTableCount++
 				break;
 
-			case "65":
+			// case "65":
 			case 65:
-			case "k12JDPrizeNumDistance": //快乐12 经典 全部中奖号跨度
+			// case "k12JDPrizeNumDistance": //快乐12 经典 全部中奖号跨度
 				tableColumCount +=1
 				 innerTableCount++
 				break;		
 			
 
 			
-			case "66":
+			// case "66":
 			case 66:
-			case "k12JDprizeNumDistribution"://  快乐12 经典
+			// case "k12JDprizeNumDistribution"://  快乐12 经典
 			             tableColumCount +=prizeNumAvailableNumCount
 				 innerTableCount++
 			       
 			          break;
 
-			 case "67":
+			//  case "67":
 			case 67:
-			case "k12JDPrizeNumRepeatTimes": //快乐12 经典
+			// case "k12JDPrizeNumRepeatTimes": //快乐12 经典
 			             tableColumCount +=1
 				 innerTableCount++
 				break;
 
-			case "68":
+			// case "68":
 			case 68:
-			case "K3Distance012"://快3跨度012路
+			// case "K3Distance012"://快3跨度012路
 				trendCellCount += 3
 			           	innerTableCount++  
 	                      	             break;
-			case "69":
+			// case "69":
 			case 69:
-			case "K3PrizeSumendTrend"://快3和尾走势
+			// case "K3PrizeSumendTrend"://快3和尾走势
 				trendCellCount += 10
 				innerTableCount++
 				break;
-			case "70":
+			// case "70":
 			case 70:
-			case "K3PrizeSumend012"://快3和尾012路
+			// case "K3PrizeSumend012"://快3和尾012路
 				trendCellCount += 3     
 			              innerTableCount++ 
 				break;
-			case "71":
+			// case "71":
 			case 71:
-			case "K3PrizeSumBig"://快3和值大小走势
+			// case "K3PrizeSumBig"://快3和值大小走势
 				tableColumCount +=2
 			          	innerTableCount++
 				break;
-			case "72":
+			// case "72":
 			case 72:
-			case "K3PrizeSumendOdd"://快3和尾单双走势
+			// case "K3PrizeSumendOdd"://快3和尾单双走势
 				tableColumCount +=2
 				innerTableCount++
 				break;
 
-			case "73"://11选5绿色期号
+			// case "73"://11选5绿色期号
 			case 73:
-			case "11x5GreenPrizeIssue"://11选5绿色版期号
+			// case "11x5GreenPrizeIssue"://11选5绿色版期号
 				tableColumCount += 1
 			        innerTableCount++
 			        break;
-			case "74"://11选5绿色走势
+			// case "74"://11选5绿色走势
 			case 74:            
-			case "11x5GreenPrizeNumDistribution"://11选5绿色版开奖走势
+			// case "11x5GreenPrizeNumDistribution"://11选5绿色版开奖走势
 				tableColumCount +=prizeNumAvailableNumCount				
 				innerTableCount++
 				break;
-			 case "75"://11选5绿色中奖号重号
+			//  case "75"://11选5绿色中奖号重号
 			 case 75:                     
-			 case "11x5GreenPrizeNumRepeatTmes"://11选5绿色版中奖号重号
+			//  case "11x5GreenPrizeNumRepeatTmes"://11选5绿色版中奖号重号
 			 	tableColumCount +=1		
 			        innerTableCount++    
 			        break;
-			 case "76"://11选5绿色中奖号跨度
+			//  case "76"://11选5绿色中奖号跨度
 			 case 76:                       
-			 case "11x5GreenPrizeNumDistance"://11选5绿色版中奖号跨度
+			//  case "11x5GreenPrizeNumDistance"://11选5绿色版中奖号跨度
 			        tableColumCount += 1			       
 			        innerTableCount++
 			        break;
-			 case "77"://11选5绿色中奖号前三走势
+			//  case "77"://11选5绿色中奖号前三走势
 			 case 77:                      
-			 case "11x5GreenPrev3PrizeNumTrend"://11选5绿色版中奖号前三走势
+			//  case "11x5GreenPrev3PrizeNumTrend"://11选5绿色版中奖号前三走势
 			 	trendCellCount += 3*prizeNumAvailableNumCount       
 			        innerTableCount+=3
 			        break;
-			 case "78"://11选5绿色中奖号前三和值
+			//  case "78"://11选5绿色中奖号前三和值
 			 case 78:                      
-			 case "11x5GreenPrizeNumSum"://11选5绿色版中奖号前三和值
+			//  case "11x5GreenPrizeNumSum"://11选5绿色版中奖号前三和值
 			 	tableColumCount += 1
 				innerTableCount++
 			        break;
 			        
-			case "79"://大乐透-版式2 前区
+			// case "79"://大乐透-版式2 前区
 			case 79:   
-			case "daLeTouPrevAreaPrizeNumDistribution"://大乐透-版式2 前区
+			// case "daLeTouPrevAreaPrizeNumDistribution"://大乐透-版式2 前区
 				tableColumCount += prevAreaPrizeNumMax//35
 				innerTableCount++
 			        break;
-			case "80"://大乐透-版式2 后区
+			// case "80"://大乐透-版式2 后区
 			case 80:   
-			case "daLeTouBackAreaPrizeNumDistribution"://大乐透-版式2 后区
+			// case "daLeTouBackAreaPrizeNumDistribution"://大乐透-版式2 后区
 				tableColumCount += backAreaPrizeNumMax//12
 				innerTableCount++
 			        break;
 
-			case "81":
+			// case "81":
 			case 81:
-			case "pai5PrizeNumSum"://排五中奖号码和值
+			// case "pai5PrizeNumSum"://排五中奖号码和值
 			        tableColumCount += 1
 			        innerTableCount++
 				break;
 
-			case "82":
+			// case "82":
 			case 82:
-			case "pai5PrizeNumBig"://排五中奖号码大小
+			// case "pai5PrizeNumBig"://排五中奖号码大小
 				tableColumCount +=5
 			          	innerTableCount++
 				break;
-			case "83":
+			// case "83":
 			case 83:
-			case "pai5BigOdd"://排五中奖号码单双
+			// case "pai5BigOdd"://排五中奖号码单双
 				tableColumCount +=5
 				innerTableCount++
 				break;
 
-			case "84":
+			// case "84":
 			case 84:
-			case "pai5PrizeNumTrend"://排列五中奖号码走势图
+			// case "pai5PrizeNumTrend"://排列五中奖号码走势图
 				trendCellCount += 5*prizeNumAvailableNumCount
 				innerTableCount+=5
 			
 		        break;
 
-			case "85":
+			// case "85":
 			case 85:
-			case "pai3PrizeNum"://排列三中奖号码
+			// case "pai3PrizeNum"://排列三中奖号码
 				tableColumCount +=3
 				innerTableCount++
 			        break;
 
-			case "86":
+			// case "86":
 			case 86:
-			case "pai3PrizeNum012Value"://排列三中奖号012路数
+			// case "pai3PrizeNum012Value"://排列三中奖号012路数
 				//trendCellCount +=3
 				tableColumCount +=3
 				innerTableCount++
 			        break;
 
-			case "87":
+			// case "87":
 			case 87:
-			case "7XingCaiPrizeNum"://七星彩中奖号码
+			// case "7XingCaiPrizeNum"://七星彩中奖号码
 				tableColumCount +=7
 				innerTableCount++
 			        break;
 
-		             case "88":
+		            //  case "88":
 			case 88:
-			case "7XingCaiPrizeNumTrend"://七星彩中奖号码走势图
+			// case "7XingCaiPrizeNumTrend"://七星彩中奖号码走势图
 				trendCellCount += 7*prizeNumAvailableNumCount
 				innerTableCount+=7
 			        break; 
 			 
-			case "89":
+			// case "89":
 			case 89:
-			case "k3prizeNumShuDistribution"://快3  
+			// case "k3prizeNumShuDistribution"://快3  
 				tableColumCount +=prizeNumAvailableNumCount//快3数字号码分布
 				 innerTableCount++
 				break;
 
-			case "90":
+			// case "90":
 			case 90:
-			case "prizeNumRepeatTimesTrend":
+			// case "prizeNumRepeatTimesTrend":
 			             trendCellCount += 6   
 			             innerTableCount++ 
 			         break;
-			case "91":
+			// case "91":
 			case 91:
-			case "prizeNumSumBig30SmallTrend":
+			// case "prizeNumSumBig30SmallTrend":
 			            tableColumCount +=3
 			            innerTableCount++ 
 			         break;
 
-			case "92":
+			// case "92":
 			case 92:
-			case "prizeNumSumOdd":
+			// case "prizeNumSumOdd":
 			           tableColumCount +=2
 			           innerTableCount++
 			         break;
 
-			case "93":
+			// case "93":
 			case 93:
-			case "prizeNumMantissa":
+			// case "prizeNumMantissa":
 				tableColumCount +=10
 				innerTableCount++
 			         break;
 
-			case "94":
+			// case "94":
 			case 94:
-			case "mahjongDistribution":
+			// case "mahjongDistribution":
 				tableColumCount +=20       
 				innerTableCount++
 			break;   
 
-			case "95":
+			// case "95":
 			case 95:
-			case "PrizeNumOddTrend":
+			// case "PrizeNumOddTrend":
 				trendCellCount  +=6
 				innerTableCount++
 			break;
 
-			case "96":
+			// case "96":
 			case 96:
-			case "PrizeNumBigNum":
+			// case "PrizeNumBigNum":
 				tableColumCount += 1
 				innerTableCount++
 			break;
-
+            default:
+				console.error("unknow case",componentList[i])
 
 		}
 	}
+	console.log(innerTableCount);
+	console.log((tableWidth -(innerTableCount-1)-tableColumCount - trendCellCount-innerTableCount))
 	tableCellWidth = Math.floor((tableWidth -(innerTableCount-1)-tableColumCount - trendCellCount-innerTableCount) / widthSquarCount);   //cell border-width:1px
-                    //因为表格边框重复的是表格数-1个
-	var trendWidth = ((tableWidth -(innerTableCount-50)-tableColumCount - trendCellCount)-tableCellWidth*tableColumCount) //考虑border-width
+	
+	var trendWidth = ((tableWidth -(innerTableCount-1)-tableColumCount - trendCellCount-innerTableCount)-tableCellWidth*tableColumCount) //考虑border-width
+	// console.log(trendWidth+trendCellCount+2+2-1);  趋势区域的实际高度
 	if(trendCellCount > 0)
 	{
 		trendWidthRedundantPixels = trendWidth%trendCellCount
 		trendCellWidth = Math.floor((trendWidth)/trendCellCount)
-		// console.log(trendCellWidth)
-		// console.log(trendWidthRedundantPixels)
+		// console.log(trendCellWidth);
+		// console.log(trendWidth);
     }
     else
     {
@@ -2805,7 +2787,7 @@ function adjustfySizeInfo()
     }
 	
 	tbodyHeight = (tableCellHeight+1) * (showPrizeItemCount+reservedLines+2)+1+Math.min(showPrizeItemCount+reservedLines+2,heightRedundantPixels) //border lines
-	
+	// console.log(tbodyHeight)
 	
 	rootTable.style.width = tableWidth+'px' 
 	
@@ -2814,7 +2796,7 @@ function adjustfySizeInfo()
 	tableContainer.style.width = rootTable.style.width
 	tableContainer.style.height = rootTable.style.height
 	
-	//console.log("document.documentElement.clientHeight:"+document.documentElement.clientHeight+"tableHeight:"+tableHeight+"rootTable.style.height:"+rootTable.style.height+" tableCellHeight:"+tableCellHeight+" tbodyHeight:"+tbodyHeight+"tableRowCount"+tableRowCount+"heightRedundantPixels"+heightRedundantPixels)
+	// console.log("document.documentElement.clientHeight:"+document.documentElement.clientHeight+"tableHeight:"+tableHeight+"rootTable.style.height:"+rootTable.style.height+" tableCellHeight:"+tableCellHeight+" tbodyHeight:"+tbodyHeight+"tableRowCount"+tableRowCount+"heightRedundantPixels"+heightRedundantPixels)
 	
 	
 	adjustTitleDivSize();
@@ -2822,11 +2804,11 @@ function adjustfySizeInfo()
 
 function configLotteryInfo()
 {
-	//console.log("configLotteryInfo  case type:"+curLotteryTypeName)
+	// console.log("configLotteryInfo  case type:"+curLotteryTypeName)
 	var tmpName = curLotteryTypeName
 	if(tmpName.indexOf("11选5")>=0)
 	{
-		//console.log("configLotteryInfo:   tmpName contain 11选5:"+tmpName.indexOf("11选5"))
+		// console.log("configLotteryInfo:   tmpName contain 11选5:"+tmpName.indexOf("11选5"))
 		tmpName = "快11选5"
 	}else if(tmpName.indexOf("快乐十")>=0){
 
@@ -2841,10 +2823,11 @@ function configLotteryInfo()
 	else if(tmpName.indexOf("481")>=0) {
 		tmpName = "泳坛夺金"
 	}
+	console.log(curLotteryTypeStyleList);
 	switch(tmpName)
 	{
 		case "大乐透": //5+2  35 12
-			prevAreaPrizeNumMax = 35  
+		    prevAreaPrizeNumMax = 35  
 			backAreaPrizeNumMax = 12 
 			prevAreaPrizeNumLength = 5 
 			prizeNumLength = 7
@@ -2884,7 +2867,6 @@ function configLotteryInfo()
 			prizeNumAvailableNumCount = 11
 			componentList = curLotteryTypeStyleList[curLotteryTypeStyleIndex][1]
 			widthSquarCount = curLotteryTypeStyleList[curLotteryTypeStyleIndex][2]
-			// console.log(curLotteryTypeStyleList)
 			break;
 		case "排列3":
 			prizeNumLength = 5
@@ -2898,44 +2880,43 @@ function configLotteryInfo()
 			break;
 
 		case "快3":
-			prizeNumLength = 3
+		    prizeNumLength = 3
 			prizeNumMax = 6
 			prizeNumMin = 1
 			prizeNumAvailableNumCount = 6			
-			componentList = curLotteryTypeStyleList[curLotteryTypeStyleIndex][1]
+            componentList = curLotteryTypeStyleList[curLotteryTypeStyleIndex][1]
 			widthSquarCount = curLotteryTypeStyleList[curLotteryTypeStyleIndex][2]
 			//widthSquarCount = 30
 			break;
 
 		case "快乐十":		            
-			prizeNumLength = 8
-			prizeNumMax = 20
-			prizeNumMin = 1
-			prizeNumAvailableNumCount = 20	
+            prizeNumLength = 8
+            prizeNumMax = 20
+            prizeNumMin = 1
+            prizeNumAvailableNumCount = 20	
 
-			componentList = curLotteryTypeStyleList[curLotteryTypeStyleIndex][1]
-			widthSquarCount = curLotteryTypeStyleList[curLotteryTypeStyleIndex][2]
-			// console.log(curLotteryTypeStyleList)
+            componentList = curLotteryTypeStyleList[curLotteryTypeStyleIndex][1]
+            widthSquarCount = curLotteryTypeStyleList[curLotteryTypeStyleIndex][2]
 			break; 
 		case "快乐12":		            
-			prizeNumLength = 5
-			prizeNumMax = 12
-			prizeNumMin = 1
-			prizeNumAvailableNumCount = 12
-			componentList = curLotteryTypeStyleList[curLotteryTypeStyleIndex][1]
-			widthSquarCount = curLotteryTypeStyleList[curLotteryTypeStyleIndex][2]
-			break;  
+            prizeNumLength = 5
+            prizeNumMax = 12
+            prizeNumMin = 1
+            prizeNumAvailableNumCount = 12
+            componentList = curLotteryTypeStyleList[curLotteryTypeStyleIndex][1]
+            widthSquarCount = curLotteryTypeStyleList[curLotteryTypeStyleIndex][2]
+            break;  
 		case "金7乐":		          
-			prizeNumLength = 3
-			prizeNumMax = 7
-			prizeNumMin = 1
-			prizeNumAvailableNumCount = 7
-			componentList = curLotteryTypeStyleList[curLotteryTypeStyleIndex][1]
-			widthSquarCount = curLotteryTypeStyleList[curLotteryTypeStyleIndex][2]
-			break;  
+            prizeNumLength = 3
+            prizeNumMax = 7
+            prizeNumMin = 1
+            prizeNumAvailableNumCount = 7
+            componentList = curLotteryTypeStyleList[curLotteryTypeStyleIndex][1]
+            widthSquarCount = curLotteryTypeStyleList[curLotteryTypeStyleIndex][2]
+            break;  
 
 		case "七星彩":
-			prizeNumLength = 7
+            prizeNumLength = 7
 			prizeNumMax = 9
 			prizeNumMin = 0
 			prizeNumAvailableNumCount = 10
@@ -2944,7 +2925,7 @@ function configLotteryInfo()
 			widthSquarCount = curLotteryTypeStyleList[curLotteryTypeStyleIndex][2]
 			break;
 		case "泳坛夺金":
-			prizeNumLength = 4
+            prizeNumLength = 4
 			prizeNumMax = 8
 			prizeNumMin = 1
 			prizeNumAvailableNumCount = 8
@@ -2958,13 +2939,16 @@ function configLotteryInfo()
 }
 function _createHeader(tableObj,titleTxt,w,h,minVal,maxVal,typeone,typej7,typek10,typek10Green,typek10Green3,typek3ZC,typek3GJ,typek3JB,typek3JB1,typej7l1,typej7l1JHZS,typej7l2,typek12JD,typek12JDHistory,typeJLK3Danshuang,typeJLK3012,type11x5GreenZuXuan,type11x5Green2,type11x5KDZS,big30Small)
 {	
-	var r = tableObj.insertRow(tableObj.rows.length)
-	r1 = tableObj.insertRow(tableObj.rows.length)
+	
+	var r = tableObj.insertRow(tableObj.rows.length)  //第一行
+	// console.log(r);
+	r1 = tableObj.insertRow(tableObj.rows.length)     //第二行
 	if(minVal ==undefined || maxVal==undefined||typeJLK3Danshuang||typeJLK3012||typej7l1||big30Small)
 	{		
 		var td = r.insertCell(0)
-		td.rowSpan = 2
-		td.style.fontSize = Math.min(w,h)*0.7+'px'
+		td.rowSpan = 2     //单元格横跨的行数
+		td.style.fontSize = Math.floor(Math.min(w,h)*0.7)+'px'
+		console.log(td.style.fontSize);
 		if (curLotteryTypeStyleName.indexOf("快彩")>=0) {//0509快彩期号头背景色
 			td.style.backgroundColor=" #EFAE6F"
 			td.style.color ="white"
@@ -2988,7 +2972,7 @@ function _createHeader(tableObj,titleTxt,w,h,minVal,maxVal,typeone,typej7,typek1
 			}
 		}
 		else{
-			td.colSpan = 1
+			td.colSpan = 1    //单元格横跨的列数
 			//td.style.backgroundColor = ""
 		}	
 		if(curHeightRedundantPixels>0)
@@ -3078,6 +3062,7 @@ function _createHeader(tableObj,titleTxt,w,h,minVal,maxVal,typeone,typej7,typek1
 		// }
 		else
 		{
+			// console.log(w);
 			td.innerHTML=getCellHTML("container",w*(maxVal-minVal+1),h,titleTxt,true)
 			if ((curLotteryTypeName.indexOf("七星彩")>=0||curLotteryTypeName.indexOf("排列3")>=0)&&curOrientation==="port") {				
 				if (titleTxt.indexOf("第")>=0||titleTxt.indexOf("排列三")>=0) {
@@ -3279,19 +3264,21 @@ function adjustColIndex(colIndex)
 }
 function initNumberMatrix(startRow)
 {
-	//console.log("initNumberMatrix 111111",curLotteryTypeDataList.length)
+	// console.log("initNumberMatrix 111111",curLotteryTypeDataList.length)
 	if(numberMatrix==undefined)
 		numberMatrix = new Array()
+		// console.log(startRow)
+		// console.log(curLotteryTypeDataList);
 	for(var i=Math.min(numberMatrix.length,startRow);i<curLotteryTypeDataList.length;i++)
 	{
 		numberMatrix[i]=new Array();
 		for(var j=0;j<prizeNumAvailableNumCount;j++)
 		{
 			numberMatrix[i][j]=0
-			//console.log("initNumberMatrix 2222222222numberMatrix",numberMatrix[i][j])
+			// console.log("initNumberMatrix 2222222222numberMatrix",numberMatrix[i][j])
 		}
 	}
-	//console.log("initNumberMatrix 2222222222")
+	// console.log("initNumberMatrix 2222222222")
 	//printData(numberMatrix)
 }
 //0:none number 1:has number 2:series num
@@ -3436,23 +3423,23 @@ function checkRightTop(row,col)
 
 function printData(dataArray)
 {
-	//console.log("111111111111111111 start<br />")
+	console.log("111111111111111111 start<br />")
 	for(var i=0;i<dataArray.length;i++)
 	{
 		for(var j=0;j<dataArray[i].length;j++)
 		{
-			//console.log(dataArray[i][j])
+			console.log(dataArray[i][j])
 		}
 	}
-	//console.log("111111111111111111 end<br />")
+	console.log("111111111111111111 end<br />")
 }
 
-function getEffectNumberLength()
+function getEffectNumberLength()   //取当前彩种的开奖号位数
 {
 	var tmpName = curLotteryTypeName
 	if(tmpName.indexOf("11选5")>=0)
 	{
-		//console.log("configLotteryInfo:   tmpName contain 11选5:"+tmpName.indexOf("11选5"))
+		// console.log("configLotteryInfo:   tmpName contain 11选5:"+tmpName.indexOf("11选5"))
 		tmpName = "快11选5"
 	}else if(tmpName.indexOf("快乐十")>=0){
 
@@ -3466,16 +3453,14 @@ function getEffectNumberLength()
 	}else if (tmpName.indexOf("481")>=0) {
 		tmpName = "泳坛夺金"
 	}
+	// console.log(tmpName);
 	switch(tmpName)
 	{
 		case "大乐透": //5+2  35 12
-		case "双色球": //6+1 prevArea:1~33 backArea:1~16
-			// console.log(prevAreaPrizeNumLength)
 			return prevAreaPrizeNumLength
 
-		
-			// console.log(prevAreaPrizeNumLength)
-			// return prevAreaPrizeNumLength
+		case "双色球": //6+1 prevArea:1~33 backArea:1~16
+			return prevAreaPrizeNumLength
 		case "3D":
 			return prizeNumLength
 		case "快11选5":
@@ -3502,8 +3487,11 @@ function getEffectNumberLength()
 }
 function updateNumberMatrix(startRow)
 {
+	// console.log(startRow);
 	initNumberMatrix(startRow)
 	
+	// console.log(numberMatrix)
+	// console.log(curLotteryTypeDataList);
 	var startCol=0
 	for(;startRow<curLotteryTypeDataList.length;startRow++)
 	{	
@@ -3511,12 +3499,14 @@ function updateNumberMatrix(startRow)
 		{
 			var colIndex=adjustColIndex( parseInt(curLotteryTypeDataList[startRow].numbers[startCol]) )
 			numberMatrix[startRow][colIndex]=1
-		}		
+			// console.log(colIndex);
+		}
+		// console.log(numberMatrix);		
 		for(startCol=0;startCol<prizeNumAvailableNumCount;startCol++)
 		{
 			if(numberMatrix[startRow][startCol]==1){
 				var colIndex=startCol//adjustColIndex(parseInt(curLotteryTypeDataList[startRow].numbers[startCol]))
-				//console.log("updateNumberMatrix:colIndex:",colIndex)
+				// console.log("updateNumberMatrix:colIndex:",colIndex)
 				if(checkLeft(startRow,colIndex))
 				{
 					numberMatrix[startRow][colIndex]=2
@@ -3555,13 +3545,15 @@ function updateNumberMatrix(startRow)
 //liutest end for ZC
 function createPrizeIssue(typek10Green,typek10Aver2,typek3ZC,typek12JD,typek12JDHistory,typek3ZCHistory,type11x5Green)
 {	
-	var tmpWdithRedundantPixels
-	if(trendCellCount==0 && trendWidthRedundantPixels>0)
+	var tmpWdithRedundantPixels   //冗余的像素大小(1像素||被单元格分割后的大小)
+	if(trendCellCount==0 && trendWidthRedundantPixels>0)  //如果没有走势部分且有冗余
 	{
 		tmpWdithRedundantPixels = Math.min(1,trendWidthRedundantPixels)
+		
 	}else{
 		tmpWdithRedundantPixels=0
 	}
+	// console.log(heightRedundantPixels)	
 	var mtable = createInnerTable(tableCellWidth,tableCellHeight,showPrizeItemCount + reservedLines+2,tmpWdithRedundantPixels,1,heightRedundantPixels)
 	
 	curHeightRedundantPixels = heightRedundantPixels
@@ -3572,7 +3564,8 @@ function createPrizeIssue(typek10Green,typek10Aver2,typek3ZC,typek12JD,typek12JD
 		_createHeaderk10(mtable,"期号",tableCellWidth,tableCellHeight,false,false,false,false,true)
 	}
 	else{_createHeader(mtable,"期号",tableCellWidth,tableCellHeight)}	
-	// console.log(showPrizeItemCount+reservedLines);
+	// console.log(mtable.rows.length);
+	console.log(curLotteryTypeDataList);
 	for(var o =0;o< showPrizeItemCount+reservedLines;o++ )
 	{		
 		var row = mtable.insertRow(mtable.rows.length)
@@ -3616,8 +3609,10 @@ function createPrizeIssue(typek10Green,typek10Aver2,typek3ZC,typek12JD,typek12JD
 				var val = parseInt(simpleIssue)
 			}
 			else{
-				var tmpIssue = curLotteryTypeDataList[o].issue
+				
+				var tmpIssue = curLotteryTypeDataList[o].issue //o不是0每一期期号
 				var simpleIssue = tmpIssue.substring(tmpIssue.length-2)
+				// console.log(simpleIssue)
 				var val = parseInt(simpleIssue)
 			}
 			if (typek10Green) {td.style.color = "#91695d"}
@@ -3687,15 +3682,15 @@ function createPrizeIssue(typek10Green,typek10Aver2,typek3ZC,typek12JD,typek12JD
 	}
 	
 	trendWidthRedundantPixels -= tmpWdithRedundantPixels
-
-	var cell = bodyContentTr.insertCell(bodyContentTr.cells.length)
+	
+	var cell = bodyContentTr.insertCell(bodyContentTr.cells.length) //插入每一列
+	// console.log(bodyContentTr.cells.length);
 	cell.style.width= mtable.style.width
-	// console.log(cell.style.width);
 	cell.style.height=mtable.style.height	        
 	if (typek10Green) {cell.style.backgroundColor = "#d4efd7"}
 	if (type11x5Green) {cell.style.backgroundColor = "#d0f1d7"}
 	if (typek3ZC) {cell.style.backgroundColor ="#808080"}
-	cell.appendChild(mtable)
+	cell.appendChild(mtable)                                 //在每一列中压入这个table
 	//cell.appendChild(div)
 }
 
@@ -4092,7 +4087,6 @@ function createPrizeNum(length,preAreaLength,testPrizeFlag,typek3,typek10Aver4,t
 
 function createOneOfPrizeNumTrend(position,title,bgColor,typek3,typek3JB,typek12Qian,type11x5Green,type11x5Green13,type11x5Green2,typeP5AndQxc)
 {
-	// console.log(trendCellWidth)
 	var div = document.createElement("div")
 	div.className = "canvasdiv"
 	div.style.position='relative'
@@ -4114,7 +4108,8 @@ function createOneOfPrizeNumTrend(position,title,bgColor,typek3,typek3JB,typek12
 	{
 		tmpWdithRedundantPixels=0
 	}
-	 
+	// console.log(tmpWdithRedundantPixels);
+	// console.log(trendCellWidth)
 	var mtable = createInnerTable(trendCellWidth,tableCellHeight,showPrizeItemCount + reservedLines+2,tmpWdithRedundantPixels,prizeNumAvailableNumCount,heightRedundantPixels,"zsttable")
 	mtable.style.position = 'absolute'
 	mtable.style.left = '0'
@@ -4139,6 +4134,8 @@ function createOneOfPrizeNumTrend(position,title,bgColor,typek3,typek3JB,typek12
 	var ballsCount=new Array()  //for 统计
 	var lastDataCount = new Array()
 	var curDataCount = new Array()
+	// console.log(prizeNumAvailableNumCount);
+	// console.log(prizeNumLength);
 	for(var i=0;i<prizeNumAvailableNumCount;i++)
 	{
 		ballsCount[i]=0
@@ -4153,7 +4150,7 @@ function createOneOfPrizeNumTrend(position,title,bgColor,typek3,typek3JB,typek12
 	div.style.height=mtable.style.height	
 	
 	var yOffset=2*(tableCellHeight+1)+1
-	// console.log(showPrizeItemCount+reservedLines);
+	// console.log(showPrizeItemCount)
 	for(var o =0;o< showPrizeItemCount+reservedLines;o++ )
 	{
 		var row = mtable.insertRow(mtable.rows.length)
@@ -4166,7 +4163,7 @@ function createOneOfPrizeNumTrend(position,title,bgColor,typek3,typek3JB,typek12
 		{			
 			val = parseInt(curLotteryTypeDataList[o].numbers[position])
 		}
-		// console.log(prizeNumAvailableNumCount); 11
+		
 		for(var i=0;i<prizeNumAvailableNumCount;i++)
 		{
 			var td = row.insertCell(i)
@@ -4183,7 +4180,6 @@ function createOneOfPrizeNumTrend(position,title,bgColor,typek3,typek3JB,typek12
 			if(curHeightRedundantPixels>0)
 			{
 				td.height = tableCellHeight+1
-				//  console.log(td.width);
 			}
 			else
 			{
@@ -4199,10 +4195,11 @@ function createOneOfPrizeNumTrend(position,title,bgColor,typek3,typek3JB,typek12
 				if(prizeNumMin == 0)
 				{
 					curDataCount[i]++
-
+					
 					if(val != i)////i从0开始，val从1开始
 					{
 						//td.innerHTML = "01"
+						cosnole.log(backgroundNumberEnabled);
 						if(backgroundNumberEnabled)
 							td.innerHTML = getCellHTML("container",trendCellWidth,tableCellHeight,curDataCount[i],true)
 						else
@@ -4228,12 +4225,14 @@ function createOneOfPrizeNumTrend(position,title,bgColor,typek3,typek3JB,typek12
 				else
 				{
 					curDataCount[i]++
+					// console.log(curDataCount)
 					if(val != i+1)// i从0开始，val从1开始
 					{
-						if(backgroundNumberEnabled)
-							td.innerHTML = getCellHTML("container",trendCellWidth,tableCellHeight,curDataCount[i],true)
-						else
-							td.innerHTML = getCellHTML("container",trendCellWidth,tableCellHeight,"&nbsp")
+						// console.log(backgroundNumberEnabled)
+						// if(backgroundNumberEnabled)
+						// 	td.innerHTML = getCellHTML("container",trendCellWidth,tableCellHeight,curDataCount[i],true)
+						// else
+						td.innerHTML = getCellHTML("container",trendCellWidth,tableCellHeight,"&nbsp")
 						td.style.color="#ffffff"
 					}
 					else{
@@ -4281,6 +4280,7 @@ function createOneOfPrizeNumTrend(position,title,bgColor,typek3,typek3JB,typek12
 							if (typek12Qian) {
 								if (parseInt(val)>9) {
 									td.innerHTML = getCellHTML("containerShape10",trendCellWidth,tableCellHeight,val,false,false,false,"HZsmall")
+									// td.innerHTML = getCellHTML("container",trendCellWidth,tableCellHeight,val,true)
 								}else{
 									td.innerHTML = getCellHTML("container",trendCellWidth,tableCellHeight,val,true)
 								}
@@ -4298,6 +4298,7 @@ function createOneOfPrizeNumTrend(position,title,bgColor,typek3,typek3JB,typek12
 							}
 							else
 							{
+								// console.log(123);
 								var len = val.toString().length
 								//td.innerHTML = getCellHTML("container",trendCellWidth,tableCellHeight,val,true)
 								if (curLotteryTypeName.indexOf("快3")>=0) {//20161014 快3走势字体缩小变粗
@@ -4331,13 +4332,19 @@ function createOneOfPrizeNumTrend(position,title,bgColor,typek3,typek3JB,typek12
 											}
 										}else{
 											td.style.fontFamily = "YCArezzo"
+											if(bgColor){
+												td.style.backgroundColor=bgColor;
+											}
+											else{
+												td.style.backgroundColor="white";
+											}
+											td.style.position="relative";
+											td.style.zIndex="999";
 											var len = val.toString().length
 											if(len===2){
 												td.innerHTML = getCellHTML("containerShape10",trendCellWidth,tableCellHeight,val)
 											}else{
-												
 												td.innerHTML = getCellHTML("container",trendCellWidth,tableCellHeight,val,false,true)
-												// console.log(trendCellWidth);
 											}
 										}										            
 									}
@@ -4347,7 +4354,6 @@ function createOneOfPrizeNumTrend(position,title,bgColor,typek3,typek3JB,typek12
 							}
 						}
 						else{
-								console.log(1);
 								td.innerHTML = getCellHTML("container",trendCellWidth,tableCellHeight,"",true)
 						}							
 							//td.style.color="#8A0000"
@@ -4364,7 +4370,7 @@ function createOneOfPrizeNumTrend(position,title,bgColor,typek3,typek3JB,typek12
 			}
 			
 		}		
-		if(o<showPrizeItemCount)
+		if(o<showPrizeItemCount)   //画canvas 
 		{
 			if(o == 0)
 			{
@@ -4475,9 +4481,12 @@ function createOneOfPrizeNumTrend(position,title,bgColor,typek3,typek3JB,typek12
 				}				
 			}
 		}
-		if(o == showPrizeItemCount+reservedLines-1)
+		if(o == showPrizeItemCount+reservedLines-1)   //最后一行记录频率，根据～来改变颜色
 		{
+			console.log(ballsCount);
+			
 			var maxMin =getMaxMinVal(ballsCount)
+			// console.log(maxMin);
 			for(index in ballsCount)
 			{
 				if (typek3) {row.cells[index].style.backgroundColor="blue"}
@@ -4515,7 +4524,7 @@ function createOneOfPrizeNumTrend(position,title,bgColor,typek3,typek3JB,typek12
 				}
 				else{
 					if(ballsCount[index]==maxMin[0])
-					{
+					{	console.log(row.cells[index]);
 						row.cells[index].style.backgroundColor="red"
 					}
 					else if(ballsCount[index]==maxMin[1])
@@ -6730,6 +6739,7 @@ function createPrizeNumSumTrend(length,typek3,typek3ZC,typej7l,typek3Sumend)
 			if(o == 0)
 			{
 				ctx.beginPath();
+
 				var tmpXPos=0;
 				if(curTrendWidthRedundantPixels>0)
 				{
@@ -8262,7 +8272,7 @@ function createPrevAreaPrizeNumDistribution(typeDLT2) //20161009大乐透版式2
 	mtable.style.left = '0'	
 	mtable.style.top = '0'
 
-	//console.log("createPrevAreaPrizeNumDistribution  mtable.style.height"+mtable.style.height)
+	console.log("createPrevAreaPrizeNumDistribution  mtable.style.height"+mtable.style.height)
 	if(prevAreaPrizeNumMax==35){
 		_createHeader(mtable,"前区",tableCellWidth,tableCellHeight,1,prevAreaPrizeNumMax)
 	}
@@ -8619,7 +8629,7 @@ function createPrevAreaPrizeNumDistribution(typeDLT2) //20161009大乐透版式2
 			curHeightRedundantPixels--
 		}
 	}	
-	//console.log("createPrevAreaPrizeNumDistribution curHeightRedundantPixels:",curHeightRedundantPixels)
+	console.log("createPrevAreaPrizeNumDistribution curHeightRedundantPixels:",curHeightRedundantPixels)
 	trendWidthRedundantPixels -= tmpWdithRedundantPixels
 	div.appendChild(mtable)
 	div.appendChild(canvas)
@@ -8753,7 +8763,7 @@ function createBackAreaPrizeNumDistribution(typeDLT2)//20161009大乐透后区
 			curHeightRedundantPixels--
 		}
 	}
-	//console.log("createBackAreaPrizeNumDistribution curHeightRedundantPixels:",curHeightRedundantPixels)
+	console.log("createBackAreaPrizeNumDistribution curHeightRedundantPixels:",curHeightRedundantPixels)
 	trendWidthRedundantPixels -= tmpWdithRedundantPixels
 	
 	var cell = bodyContentTr.insertCell(bodyContentTr.cells.length)
@@ -8943,7 +8953,7 @@ function createBackAreaPrizeTrend()
 
 	}
 
-	//console.log("createBackAreaPrizeTrend curHeightRedundantPixels:",curHeightRedundantPixels)	
+	console.log("createBackAreaPrizeTrend curHeightRedundantPixels:",curHeightRedundantPixels)	
 	trendWidthRedundantPixels -= tmpWdithRedundantPixels
 	ctx.stroke()
 
@@ -8970,12 +8980,11 @@ function createAver4PrizeNumDistribution()
 	var ballsCount=new Array()  //for 统计
 	for(var i=0;i<prizeNumMax;i++)
 		ballsCount[i]=0
-	// console.log(ballsCount)
+	
 	var tmpWdithRedundantPixels
 	if(trendCellCount==0 && trendWidthRedundantPixels>0)
 	{
 		tmpWdithRedundantPixels = Math.min(prizeNumMax,trendWidthRedundantPixels)
-		//  console.log(heightRedundantPixels);
 	}
 	else
 	{
@@ -9301,11 +9310,6 @@ function createAver2PrizeNumDistribution()
 			if(o< showPrizeItemCount)
 			{
 				td.innerHTML = getCellHTML("container",tableCellWidth,tableCellHeight,"&nbsp")
-				//快乐十分背景遗漏test
-				// td.innerHTML = getCellHTML("container",tableCellWidth,tableCellHeight,"1",false,false,false,"k10yilou");
-				// // td.innerHTML = getCellHTML("container",tableCellWidth,tableCellHeight,"1",false,false,false,"k10yilou");
-				// td.style.color="#ccc"//"#B5B5B5"
-				// td.style.fontWeight="lighter"
 			}
 			else
 			{
@@ -9681,8 +9685,8 @@ function createbackAreaPrizeNum012Val()
 function createPai3PrizeNum012Val(){//20161011 012路数函数
 
 	var ballsCount=new Array()  //for 统计
-	for(var i=0;i<3;i++)
-		ballsCount[i]=0
+		for(var i=0;i<3;i++)
+			ballsCount[i]=0
 
 	var tmpWdithRedundantPixels
 	if(trendWidthRedundantPixels>0)
@@ -10305,8 +10309,6 @@ function handlekeyright(){
 	var lotteryName2;
     justUpdatePrizeNumAreaFlag=true
 	//liutest begin for 单彩种多版式右键切换版式问题
-	console.log(curLotteryTypeDataList);
-	console.log(lotteryTypeList);
 	if(curLotteryTypeStyleIndex == curLotteryTypeStyleList.length-1)//最后一个版式，需要考虑切换彩种或第一个版式
 	{
 		curLotteryTypeStyleIndex = 0;//置为第一个版式
@@ -10337,7 +10339,7 @@ function handlekeyright(){
 				gNewYlFlag = false;//liutest 1124
 				initTableContent();
 			}
-		//liutest end
+	//liutest end
 		}
 		else
 		{
@@ -10366,7 +10368,7 @@ function handlekeyright(){
 		curLotteryTypeStyleIndex++
 		curLotteryTypeStyleName = curLotteryTypeStyleList[curLotteryTypeStyleIndex][0]
 		gNewYlFlag = false;//liutest 1124
-		initTableContent()
+        initTableContent()
 	}
 	localStorage.lastLotteryTypeStyleName = curLotteryTypeStyleName
 }
@@ -10378,8 +10380,8 @@ function initTableContent()
 {
 	
 	rootTable = document.getElementById("k3table");
-	tableContainer = document.getElementById("tableContainer");
-	tableContainer.onclick = handlekeyright	
+    tableContainer = document.getElementById("tableContainer");
+    tableContainer.onclick = handlekeyright	
 	tableCaption = document.getElementById("tablecaption")
 
 	bodyContentTr = document.getElementById("bodyContentTr")
@@ -10446,9 +10448,10 @@ function initTableContent()
 	trendCellCount=0
 
 	configLotteryInfo()
+	// console.log(needInitNumberMatrix)
 	if(needInitNumberMatrix){
-		//console.log("111111111111111111 updateNumberMatrix:222",needInitNumberMatrix)
-		updateNumberMatrix(0)//分析连号矩阵数据
+		// console.log("111111111111111111 updateNumberMatrix:222",needInitNumberMatrix)
+		updateNumberMatrix(0)
 		needInitNumberMatrix=false
 	}
 
@@ -10462,7 +10465,7 @@ function initTableContent()
 	// 	curLotteryTypeDataList = gLotteryDataList85.slice(85-showPrizeItemCount,85);
 	// }
 	//liutest end for ZC
-    // console.log(componentList);
+	console.log(componentList);
 	for(var i in componentList)
 	{
 		switch(componentList[i])
@@ -10725,7 +10728,7 @@ function initTableContent()
 				createPrizeNumDistribution(3,false,false,false,true)//金七乐1 前区分布				
 				break;
 
-			case "46":
+		    case "46":
 			case 46:
 			case "j7l1prizeNumSum"://金七乐１
 			           createPrizeNumSum(prizeNumLength,true)//金七乐1和值	          
@@ -11040,61 +11043,7 @@ function initTableContent()
 	coverArea()
 	justUpdatePrizeNumAreaFlag=false
 }
-//520 520升级遮挡 start
-var sjzhedang
-function shengjiZhedang(){//520升级遮挡
-	var myDate = new Date().toLocaleDateString()
-	
-	sjzhedang = document.getElementById("sjzhedang")
-	if (notificationAreaEnable) {
-		sjzhedang.style.display = "block"
-	}else{
-		sjzhedang.style.display = "none"
-	}
-	
-	sjzhedang.style.width=(tableWidth-2-tableCellWidth)+"px"
-	sjzhedang.style.marginLeft = tableCellWidth+4+"px"
-	sjzhedang.style.marginTop = (tableCellHeight+2)*2+captionHeight+"px"
 
-	if (myDate==="2017/5/15"||myDate==="2017/5/16"||myDate==="2017/5/17") {
-		sjzhedang.style.height = ((tableCellHeight+2)*10)*2+"px"
-		shengjiText ="<span style='color:red;font-size:60px;'> 重要通知</span><br><br>"
-		shengjiText1 = "<span style='color:black;font-size:22px;'>88走势图近期将进行系统升级，为更好的服务大家，请大家积极配合!升级方法如下：<br></span><span style='color:blue;font-size:19px;'>（也可关注微信公众号“88云电视走势图”，查看具体升级方法）</span><br><br>"
-		shengjiText2 = "<span style='color:black;font-size:20px;'>1、操控机顶盒遥控器，进入到走势图机顶盒全部应用中;<br>2、在机顶盒的全部应用中找到当贝市场，进入当贝市场进行搜索;<br>3、输入数字“X88”可以搜索到“新88走势图”，点击下载按照提示进行安装;<br>4、成功安装升级版88走势图之后，此告示将不再显示。</span><br><br>"
-		
-		shengjiText3 = "<span style='color:blue;font-size:24px'>请积极配合升级，此版本最终到期日期为<span style='color:red;font-size:29px;'>2017年5月19日</span>，后期将无法使用！！</span><br>"
-		shengjiText4= "<span style='color:black;font-size:18px;margin-left:450px;'>咨询电话：010-82560668</span>"
-
-	}else if (myDate==="2017/5/18"||myDate==="2017/5/19") {
-		sjzhedang.style.height = ((tableCellHeight+2)*10)*3+"px"
-		shengjiText ="<span style='color:red;font-size:100px;'> 重要通知</span><br><br>"
-		shengjiText1 = "<span style='color:black;font-size:29px;'>88走势图近期将进行系统升级，为更好的服务大家，请大家积极配合!升级方法如下：<br></span><span style='color:blue;font-size:24px;'>（也可关注微信公众号“88云电视走势图”，查看具体升级方法）</span><br><br><br>"
-		shengjiText2 = "<span style='color:black;font-size:24px;'>1、操控机顶盒遥控器，进入到走势图机顶盒全部应用中;<br>2、在机顶盒的全部应用中找到当贝市场，进入当贝市场进行搜索;<br>3、输入数字“X88”可以搜索到“新88走势图”，点击下载按照提示进行安装;<br>4、成功安装升级版88走势图之后，此告示将不再显示。</span><br><br><br>"
-		
-		shengjiText3 = "<span style='color:blue;font-size:28px'>请积极配合升级，此版本最终到期日期为<span style='color:red;font-size:32px;'>2017年5月19日</span>，后期将无法使用！！</span><br><br><br>"
-		shengjiText4= "<span style='color:black;font-size:21px;margin-left:450px;'>咨询电话：010-82560668</span>"
-
-	}else{
-		sjzhedang.style.height = ((tableCellHeight+2)*10)+"px"
-		shengjiText = "<center><span style='color:red;font-size:28px;'> 重要通知</span></center>"
-		shengjiText1 = "<span style='color:black;font-size:15px;'>为提供更好的服务，本软件需要进行升级，升级过程中需要您进行简单的操作。方法如下（建议您拍照下来便于记忆）：</span><span style='color:blue;font-size:15px;'>（也可关注微信公众号“doyee-88zst”查看升级方法）</span><br>"
-		shengjiText2 = "<span style='color:black;font-size:15px;'>1：拿机顶盒遥控器按返回退出走势图，进入应用里，找到当贝市场，下载安装当贝市场;<br>2、当贝市场安装完成后，在当贝市场中搜索“88”,找到“新88走势图”，点击下载安装;<br>3、安装完成之后点击打开，会提示卸载88走势图(请不用担心，这是卸载旧的软件)点击确定即可。</span><br>"
-		shengjiText3 = "<span style='color:blue;font-size:17px'>请您尽快完成升级，最终截止日期为<span style='color:red;font-size:24px;'>2017年5月19日</span>，如未完成升级届时将可能不能正常使用！<span style='color:red;font-size:24px;'>升级完成后，此通知将不再显示</span><br>"
-		shengjiText4= "<b><span style='color:black;font-size:17px'>如有疑问，请联系微信13240999061或电话：010-82560668</span></b><br>"
-		shengjiText5= "<span style='color:black;font-size:12px;margin-left:100px;'>温馨提示：如果没有遥控器，可使用鼠标接在机顶盒上操作，左键确认右键返回。</span>"
-	}
-	
-	sjzhedang.style.backgroundColor = "#FAFAD2"
-	// sjzhedang.style.color = "black"
-	// shengjiText ="<span style='color:red;font-size:32px;'> 重要通知</span><br>"
-	// shengjiText1 = "<span style='color:black;font-size:15px;'>88走势图近期将进行系统升级，为更好的服务大家，请大家积极配合!升级方法如下：<br></span><span style='color:blue;font-size:15px;'>（也可关注微信公众号“88云电视走势图”，查看具体升级方法）</span><br>"
-	// shengjiText2 = "<span style='color:black;font-size:15px;'>1、操控机顶盒遥控器，进入到走势图机顶盒全部应用中;<br>2、在机顶盒的全部应用中找到当贝市场，进入当贝市场进行搜索;<br>3、输入数字“88”可以搜索到“88电视走势图”，点击下载按照提示进行安装;<br>4、成功安装升级版88走势图之后，在全部应用中会看到两个88走势图软件，升级后的软件名为“新88走<br>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp势图”，届时请进入到设置-应用中，将旧版本名为“88走势图”的旧软件卸载掉;<br>5、如若升级成功，此告示将不再显示。</span><br>"
-	
-	// shengjiText3 = "<span style='color:blue;font-size:18px'>请积极配合升级，此版本最终到期日期为<span style='color:red;font-size:25px;'>2017年5月19日</span>，后期将无法使用！！</span><br>"
-	// shengjiText4= "<span style='color:black;font-size:15px;margin-left:510px;'>咨询电话：010-82560668</span>"
-	sjzhedang.innerHTML =shengjiText+shengjiText1+shengjiText2+shengjiText3+shengjiText4+shengjiText5
-}
-//520 520升级遮挡 end
 function coverArea(){
 	curLotteryTypePeriod = lotteryConfig.config.lotteries[curLotteryTypeIndex].periods
 	overdueDiv = document.getElementById("overdueDiv")
@@ -11109,7 +11058,9 @@ function coverArea(){
 			if (curOrientation==="port") {
 				overdueDiv.style.width = "717px";
 				overdueDiv.style.height = "350px";
-
+				overdueDiv.innerHTML="<div style='font-size:30px;color:red'>请扫描下方二维码完成微信支付<br/>再联系"+agentphoneNumber+"开通</div><div id='CoverImgDiv'></div>"
+				overdueDiv.style.textAlign="center";
+				coverImgDiv = document.getElementById("CoverImgDiv")
 				coverImgDiv.innerHTML = "<img src =\""+coverSrc+"\" height = 100%>";
 			}
 			
@@ -11139,15 +11090,15 @@ function handleKeyUp(e)
 
 		case 37: //left
 		case 4: //left
-		 //              console.log("before handle left key  curLotteryTypeStyleIndex:",curLotteryTypeStyleIndex)
-			// console.log("before handle left key  curLotteryTypeStyleList.length:",curLotteryTypeStyleList.length)
-			// console.log("before handle left key  curLotteryTypeStyleName:",curLotteryTypeStyleName)
-			// console.log("before handle left key  curLotteryTypeIndex:",curLotteryTypeIndex)
-			// console.log("before handle left key  lotteryTypeList.length:",lotteryTypeList.length)
+		              console.log("before handle left key  curLotteryTypeStyleIndex:",curLotteryTypeStyleIndex)
+			console.log("before handle left key  curLotteryTypeStyleList.length:",curLotteryTypeStyleList.length)
+			console.log("before handle left key  curLotteryTypeStyleName:",curLotteryTypeStyleName)
+			console.log("before handle left key  curLotteryTypeIndex:",curLotteryTypeIndex)
+			console.log("before handle left key  lotteryTypeList.length:",lotteryTypeList.length)
 			justUpdatePrizeNumAreaFlag=true
 			if(curLotteryTypeStyleIndex == 0)//当前彩种第一个版式，需要考虑切换彩种或者到最后一个版式
 			{
-				//console.log("handleKeyUp:left curLotteryTypeIndex",curLotteryTypeIndex)
+				console.log("handleKeyUp:left curLotteryTypeIndex",curLotteryTypeIndex)
 				
 				if(curLotteryTypeIndex==0)
 				{
@@ -11155,7 +11106,7 @@ function handleKeyUp(e)
 					curLotteryTypeIndex=lotteryTypeList.length-1
 
 					//lottery changed
-					//console.log("handleKeyUp:left curLotteryTypeIndex",curLotteryTypeIndex)
+					console.log("handleKeyUp:left curLotteryTypeIndex",curLotteryTypeIndex)
 					if(curLotteryTypeIndex != 0)
 					{
 						lotteryName2 = lotteryTypeList[curLotteryTypeIndex].interval
@@ -11169,7 +11120,7 @@ function handleKeyUp(e)
 						curLotteryTypeStyleList=lotteryTypeList[curLotteryTypeIndex].formats
 						curLotteryTypeStyleIndex=curLotteryTypeStyleList.length-1
 						curLotteryTypeStyleName = curLotteryTypeStyleList[curLotteryTypeStyleIndex][0]
-						//console.log("handleKeyUp:left curLotteryTypeStyleIndex",curLotteryTypeStyleIndex)
+						console.log("handleKeyUp:left curLotteryTypeStyleIndex",curLotteryTypeStyleIndex)
 						gNewYlFlag = true;//liutest 1124
 						requestLotteryData(lotteryTypeList[curLotteryTypeIndex].name,lotteryTypeList[curLotteryTypeIndex].periods)
 					}
@@ -11208,15 +11159,14 @@ function handleKeyUp(e)
 				curLotteryTypeStyleIndex--
 				curLotteryTypeStyleName = curLotteryTypeStyleList[curLotteryTypeStyleIndex][0]
 				gNewYlFlag = false;//liutest 1124
-				initTableContent()
+		              initTableContent()
 			}
 			localStorage.lastLotteryTypeStyleName = curLotteryTypeStyleName
-
-			// console.log("after handle left key  curLotteryTypeStyleIndex:",curLotteryTypeStyleIndex)
-			// console.log("before handle left key  curLotteryTypeStyleList.length:",curLotteryTypeStyleList.length)
-			// console.log("after handle left key  curLotteryTypeStyleName:",curLotteryTypeStyleName)
-			// console.log("after handle left key  curLotteryTypeIndex:",curLotteryTypeIndex)
-			// console.log("after handle left key  lotteryTypeList.length:",lotteryTypeList.length)
+			console.log("after handle left key  curLotteryTypeStyleIndex:",curLotteryTypeStyleIndex)
+			console.log("before handle left key  curLotteryTypeStyleList.length:",curLotteryTypeStyleList.length)
+			console.log("after handle left key  curLotteryTypeStyleName:",curLotteryTypeStyleName)
+			console.log("after handle left key  curLotteryTypeIndex:",curLotteryTypeIndex)
+			console.log("after handle left key  lotteryTypeList.length:",lotteryTypeList.length)
 			break;
 		case 39: //right
 		case 6: //right		
@@ -11284,15 +11234,14 @@ var xmlhttp;
 function initLotteryDataList()
 {
 	
-	//console.log("initLotteryDataList data:"+xmlhttp.responseText)
+	// console.log("initLotteryDataList data:"+xmlhttp.responseText)
 	var result= JSON.parse(xmlhttp.responseText)
-    console.log(result);
+
 	if(result.msg == "ok")
 	{
 		//liutest begin for ZC0912
 		// curLotteryTypeDataList = result.data
 		gLotteryDataList85 = result.data;
-		// console.log(gLotteryDataList85);
 		// if(curOrientation=="land")
 		// {
 		// 	curLotteryTypeDataList = result.data.slice(56,80);
@@ -11305,26 +11254,25 @@ function initLotteryDataList()
 		// }
 		//liutest end for ZC0912
 		needInitNumberMatrix = true
-		console.log(curLotteryTypeStyleList);
+
 		for(var i =0;i<curLotteryTypeStyleList.length;i++)
 		{
 			if(localStorage.lastLotteryTypeStyleName == curLotteryTypeStyleList[i][0]) //0:name 1:style item array ，2 square count
 			{
-				//console.log("localStorage.lastLotteryTypeStyleName:"+localStorage.lastLotteryTypeStyleName)
+				// console.log("localStorage.lastLotteryTypeStyleName:"+localStorage.lastLotteryTypeStyleName)
 				curLotteryTypeStyleIndex = i;
-				// console.log(curLotteryTypeStyleIndex);	
 				curLotteryTypeStyleName = curLotteryTypeStyleList[i][0]
 				break
 			}
 			else if(i==curLotteryTypeStyleList.length-1)
 			{
-				// console.log(curLotteryTypeStyleIndex);
+				
 				localStorage.lastLotteryTypeStyleName = curLotteryTypeStyleList[curLotteryTypeStyleIndex][0]//更新初始化
 				curLotteryTypeStyleName = curLotteryTypeStyleList[curLotteryTypeStyleIndex][0]
 			}
 		
 		}			
-		// console.log(curLotteryTypeStyleList);
+
 		orderChannel(curLotteryTypeName) 
 		//liutest for ZC0912
 		if(curOrientation=="land")
@@ -11334,20 +11282,15 @@ function initLotteryDataList()
 		}
 		else
 		{
-			// console.log(gLotteryDataList85);	
 			curLotteryTypeDataList = gLotteryDataList85.slice(85-destPrizeItemCount,85);
-			// console.log(curLotteryTypeDataList);
 			if(destPrizeItemCount>40){
 				historyNumbers = gLotteryDataList85.slice(0,destPrizeItemCount);
 			}else{
 				historyNumbers = gLotteryDataList85.slice(85-2*destPrizeItemCount,85-destPrizeItemCount);
-				// console.log(historyNumbers);
-				// console.log(destPrizeItemCount);
 			}
 		}
 		//liutest end for ZC0912
 		showPrizeItemCount = Math.min(destPrizeItemCount,curLotteryTypeDataList.length)
-		console.log(destPrizeItemCount);
 		initTableContent()
 		
 		systemUpdateFlag = true
@@ -11363,7 +11306,7 @@ function handleRequestLotteryDataResponse()//处理彩票数据请求响应
 		}
 		else
 		{
-			//console.log(xmlhttp.status)
+			console.log(xmlhttp.status)
 		}
 	}	
 }
@@ -11372,7 +11315,7 @@ function requestLotteryData(name,count)
 {
 	count = count > 100?40:count;
 	systemUpdateFlag = false
-	//console.log("requestLotteryData lotteryTypeName:"+name+":"+count)
+	// console.log("requestLotteryData lotteryTypeName:"+name+":"+count)
 	if(count< 0 || count > 85)
 	{
 		count = lotteryTypeList[curLotteryTypeIndex].periods
@@ -11382,13 +11325,13 @@ function requestLotteryData(name,count)
 	if(curOrientation=="land")
 	{
 		destPrizeItemCount = landDestPrizeItemCount
-		//console.log("curOrientation land"+destPrizeItemCount+landDestPrizeItemCount)
+		console.log("curOrientation land"+destPrizeItemCount+landDestPrizeItemCount)
 	}
 	else
 	{
 		localStorage.lastPeriods = count
 		destPrizeItemCount = count
-		//console.log("curOrientation port count"+destPrizeItemCount+count)
+		// console.log("curOrientation port count"+destPrizeItemCount+count)
 	}
 	curLotteryTypeName = name	
 
@@ -11399,6 +11342,7 @@ function requestLotteryData(name,count)
 	xmlhttp.open("GET","http://123.57.212.33/wserver/histnum?uid="+localStorage.sn+"&channel="+name+"&count=85",true);
 	//liutest end for ZC0912
 	xmlhttp.send();
+
 	overdueDiv = document.getElementById("overdueDiv")//覆盖位置
 	switch(parseInt(destPrizeItemCount)){
 		case 40:overdueDiv.style.marginTop = "754px";break;
@@ -11435,7 +11379,6 @@ function yilouDataRequest(){//20170414 遗漏数据加载 function
 		if (yilouxmlhttp.readyState==4){
 			if(yilouxmlhttp.status==200){
 				var result= JSON.parse(yilouxmlhttp.responseText);
-				// console.log(JSON.stringify(result));
 				_handlePushmsg({
 					channel:name,
 					cmd:"pushmsg",
@@ -11457,10 +11400,9 @@ function initLotteryConfig()//初始化彩票配置
 {
 	//var lcObject = JSON.parse(xmlhttp.responseText)
 	lotteryConfig = JSON.parse(xmlhttpconfig.responseText)
-	console.log(lotteryConfig)
-	// console.log(lotteryConfig.config)
+	
 	var lcObject = lotteryConfig
-	//console.log("config responseText",xmlhttpconfig.responseText)
+	// console.log("config responseText",xmlhttpconfig.responseText)
 	if(lcObject.msg=="ok")
 	{
 		lotteryTypeList = lotteryConfig.config.lotteries
@@ -11471,7 +11413,8 @@ function initLotteryConfig()//初始化彩票配置
 		adSwitchInterval = lotteryConfig.config.adinterval //s
 		agentphoneNumber = lotteryConfig.config.agentphone
 		localStorage.agentphoneNumber=agentphoneNumber
-		expirydate = lotteryConfig.config.expirydate  //到期时间
+		expirydate = lotteryConfig.config.expirydate
+
 		//liutest begin 暂如此处理，后续实现遗漏和广告混合轮播时还需要调整 And 修改天津快十的表尾为2行的问题0921
 		yilouAreaEnable = false;
 		for(var i = 0;i < adList.length;i++){
@@ -11481,29 +11424,30 @@ function initLotteryConfig()//初始化彩票配置
 			}else{
 				GuangGao = true
 			}
-			// if (adList[i].name.indexOf("遗漏2")>=0&&adList.length>1) {
-			// 	yilou2 = true;
-			// }
 			if ((lotteryConfig.config.ads[i].name == "天津")||(lotteryConfig.config.ads[i].name == "天津体彩")){
 				advertisingRowsNum = 2;
 			}
 		}
 		//liutest end
-		console.log(lotteryTypeList)
+		// console.log("notificationAreaEnable:",notificationAreaEnable)
+		// console.log("advertisingAreaEnable:",advertisingAreaEnable)
+		// console.log("adSwitchInterval:",adSwitchInterval)
+		
+		lotteryTypeList = lcObject.config.lotteries
 		// curLotteryTypeStyleList=lotteryTypeList[curLotteryTypeIndex].formats
 		//check expirydate start
 		//expirydate
 		var date = new Date();
 		var curDateTime=date.getTime()
 		var destDateTime = Date.parse(expirydate)
-		// console.log(curDateTime);
+
 		var lastDays
 		if(destDateTime <= curDateTime)
 			lastDays=0;
 		else
 			lastDays = Math.ceil( (destDateTime-curDateTime)/(24*60*60*1000))
-        // console.log(lastDays);
-		if(lastDays>0 && lastDays<=5)
+
+		if(destDateTime > curDateTime&& (destDateTime-curDateTime<=5*24*60*60*1000) )
 		{
 			showSysEventFloat(4,"您的帐号即将到期，请联系 <br /><span style='color:red;font-size:32px;font-style:italic;'>"+agentphoneNumber+"</span><br />续费，以免影响您的使用！<br/>"+"还剩 <span style='color:red;font-size:66px;'>"+lastDays+"</span> 天") 
 
@@ -11522,9 +11466,9 @@ function initLotteryConfig()//初始化彩票配置
 				{
 				    curLotteryTypeIndex = i;
 					curLotteryTypeName = lotteryTypeList[curLotteryTypeIndex].name
-					//console.log("initLotteryConfig  22221:"+lotteryTypeList[i].name+":"+localStorage.lastLotteryTypeName+localStorage.lastPeriods)
-					//console.log("curLotteryTypeIndex22220:"+curLotteryTypeIndex+lotteryTypeList.length)
-					//console.log("initLotteryConfig  22220"+lotteryTypeList[curLotteryTypeIndex].name+lotteryTypeList[curLotteryTypeIndex].periods)
+					// console.log("initLotteryConfig  22221:"+lotteryTypeList[i].name+":"+localStorage.lastLotteryTypeName+localStorage.lastPeriods)
+					// console.log("curLotteryTypeIndex22220:"+curLotteryTypeIndex+lotteryTypeList.length)
+					// console.log("initLotteryConfig  22220"+lotteryTypeList[curLotteryTypeIndex].name+lotteryTypeList[curLotteryTypeIndex].periods)
 					//alert("====================="+lotteryTypeList[curLotteryTypeIndex].periods+":"+localStorage.lastPeriods)
 					if(localStorage.lastPeriods == undefined)
 					{
@@ -11579,7 +11523,7 @@ function handleRequestLotteryConfigResponse()//处理彩票配置请求响应
 		}
 		else
 		{
-			//console.log(xmlhttpconfig.status)
+			console.log(xmlhttpconfig.status)
 		}
 	}
 }
@@ -11587,7 +11531,7 @@ function handleRequestLotteryConfigResponse()//处理彩票配置请求响应
 function requestLotteryConfig()//彩票配置信息 config
 {
 	xmlhttpconfig = new XMLHttpRequest()// XMLHttpRequest 对象用于在后台与服务器交换数据
-	// console.log(xmlhttpconfig);
+	
 	xmlhttpconfig.onreadystatechange = handleRequestLotteryConfigResponse//触发handleRequestLotteryConfigResponse函数
 	xmlhttpconfig.open("GET","http://123.57.212.33/wserver/init/config?uid="+localStorage.sn,true);
 	xmlhttpconfig.send();/*xmlhttp.open  xmlhttp.send将请求发送到服务器*/
@@ -11631,10 +11575,10 @@ function _handleReply(messageObj)
 
 function _handleAd(messageObj)
 {
-	// console.log("_handleAd messageObj.ad_name:",messageObj.ad_name)
-	// console.log("_handleAd messageObj.ad_interval:",messageObj.ad_interval)
-	// console.log("_handleAd messageObj.ad_hsrc:",messageObj.ad_hsrc)
-	// console.log("_handleAd messageObj.ad_vsrc:",messageObj.ad_vsrc)
+	console.log("_handleAd messageObj.ad_name:",messageObj.ad_name)
+	console.log("_handleAd messageObj.ad_interval:",messageObj.ad_interval)
+	console.log("_handleAd messageObj.ad_hsrc:",messageObj.ad_hsrc)
+	console.log("_handleAd messageObj.ad_vsrc:",messageObj.ad_vsrc)
 
 		for(var i=0;i<adList.length;i++)
 		{
@@ -11659,21 +11603,21 @@ function _handleAd(messageObj)
 
 function _handleNotify(messageObj)
 {
-	// console.log("_handleNotify messageObj.cmd:",messageObj.cmd)
-	// console.log("_handleNotify messageObj.text:",messageObj.text)
+	console.log("_handleNotify messageObj.cmd:",messageObj.cmd)
+	console.log("_handleNotify messageObj.text:",messageObj.text)
 	notifyList.push(messageObj.text)//push() 方法可向数组的末尾添加一个或多个元素，并返回新的长度。
 }
 
 function _handleConfigChanged(messageObj)
 {
-	//console.log("_handleConfigChanged messageObj.cmd:",messageObj.cmd)
+	console.log("_handleConfigChanged messageObj.cmd:",messageObj.cmd)
 	updateADAndYL = false
 	requestLotteryConfig()
 }
 
 function handleKickws()
 {
-	//console.log("handleKickws")
+	console.log("handleKickws")
 	clearTimeout()
 	if(ws.readyState!==3)
 	{
@@ -11684,9 +11628,9 @@ function handleKickws()
 //just show info and stop update
 function _handleSysEvent(messageObj)
 {
-	// console.log("_handleSysEvent messageObj.cmd:",messageObj.cmd)
-	// console.log("_handleSysEvent messageObj.code:",messageObj.code)
-	// console.log("_handleSysEvent messageObj.msg:",messageObj.msg)
+	console.log("_handleSysEvent messageObj.cmd:",messageObj.cmd)
+	console.log("_handleSysEvent messageObj.code:",messageObj.code)
+	console.log("_handleSysEvent messageObj.msg:",messageObj.msg)
 	switch(messageObj.code) 
 	{
 		case 1: // 帐号到期  
@@ -11739,7 +11683,7 @@ function _handlePublish(messageObj)
 			{
 				return
 			}
-			//console.log("_handlePublish lastIssueNum: 111111111")
+			console.log("_handlePublish lastIssueNum: 111111111")
 			//push and update
 			//liutest begin for ZC
 			historyNumbers.push(curLotteryTypeDataList[0]);
@@ -11752,7 +11696,7 @@ function _handlePublish(messageObj)
 			}
 			curLotteryTypeDataList.push(messageObj)
 			
-			//console.log("_handlePublish lastIssueNum: 222222")
+			console.log("_handlePublish lastIssueNum: 222222")
 			
 			var lastNumberMatrix=new Array();
 			numberMatrix.push(lastNumberMatrix)
@@ -11762,16 +11706,16 @@ function _handlePublish(messageObj)
 			}
 			updateNumberMatrix(numberMatrix.length-1)
 			
-			//console.log("_handlePublish lastIssueNum: 3333")
+			console.log("_handlePublish lastIssueNum: 3333")
 			showPrizeItemCount = Math.min(destPrizeItemCount,curLotteryTypeDataList.length)
 			justUpdatePrizeNumAreaFlag = true			
 			initTableContent()
-			//console.log("_handlePublish lastIssueNum: 4444")
+			console.log("_handlePublish lastIssueNum: 4444")
 		}
 		else if(msgObjIssueNum <= lastIssueNum)
 		{
 			//check and update date =>update view
-			//console.log("_handlePublish update date 11")
+			console.log("_handlePublish update date 11")
 			for(var i=curLotteryTypeDataList.length-1;i>=0;i--)
 			{
 				var lastIssueStr = curLotteryTypeDataList[i].issue
@@ -11898,7 +11842,7 @@ function handlePushMessage(messageObj)//处理推送消息
 
 //todo:need check ws state,if closed,then close and reconnect
 var orderChannelFlag=false
-function orderChannel(channel)//订阅频道
+function orderChannel(channel)//订阅途径
 {
 	if(ws.readyState==1){//1 请求已提出（调用 send() 之前）
 		ws.send('{"cmd": "subscribe","channel":"'+channel+'" }') //JOSN.stringify // 发送一个初始化消息
@@ -11906,7 +11850,6 @@ function orderChannel(channel)//订阅频道
 	else if(ws.readyState==2 || ws.readyState==3)
 	{
 		orderChannelFlag = true
-		console.log(sf);
 		ws.close()
 	}
 	
@@ -11929,7 +11872,7 @@ function initWebSocket()
 	}
 	
 	ws = new WebSocket("ws://123.57.212.33:8888/push?uid="+localStorage.sn)//创建Socket实例
-	console.log("initWebSocket ws.readyState:",ws.readyState)
+	// console.log("initWebSocket ws.readyState:",ws.readyState)
 	ws.onopen = function(event)//打开Socket 
 	{
 		websocketClosed = false
@@ -11945,7 +11888,6 @@ function initWebSocket()
 	{
 		//alert("ws.onmessage:"+event.data)
 		var receivedObj = JSON.parse(event.data)
-		// console.log(receivedObj);	
 		handlePushMessage(receivedObj)
 	}
 	ws.onclose = function()//监听Socket的关闭
@@ -12039,7 +11981,7 @@ var heartSeatInterval=30
 function checkAndUpdateStateRegularly()
 {
 	// 1008修改登录方式  do checkConnection start
-	
+	// console.log(2222);
 	doCheckConnectionTimes=(doCheckConnectionTimes+1)%10
 	if(doCheckConnectionTimes==0)
 	{
@@ -12072,7 +12014,6 @@ function checkAndUpdateStateRegularly()
 	}else{
 		if(styleTitleDiv){
 			styleTitleDiv.style.backgroundColor = "red";
-			styleTitleDiv.innerHTML = "网络异常"
 		}
 	}
 		
@@ -12095,7 +12036,7 @@ function checkAndUpdateStateRegularly()
 				}
 				else
 				{
-					//console.log("checkAndUpdateStateRegularly:initTableContent")
+					console.log("checkAndUpdateStateRegularly:initTableContent")
 					initTableContent()
 				}
 			}
@@ -12118,7 +12059,7 @@ function checkAndUpdateStateRegularly()
 			initWebSocket()
 	}
 
-	// 帐号即将到期提示
+	
 	if(accountExpiringtipsVisible)
 	{
 		if(accountExpiringtipsInterval<=0)
@@ -12164,7 +12105,7 @@ var loginState="logout" //loginfail,loginsuccess,logout
 var xmlhttpLogin;
 function handleLoginRequestResponse()//处理登录请求响应 
 {
-	//console.log("login handleLoginRequestResponse:"+xmlhttpLogin.readyState+":"+xmlhttpLogin.status)
+	// console.log("login handleLoginRequestResponse:"+xmlhttpLogin.readyState+":"+xmlhttpLogin.status)
 	if (xmlhttpLogin.readyState==4)  /*readyState
 					    0：请求未初始化（还没有调用 open()）。
 					    1：请求已经建立，但是还没有发送（还没有调用 send()）。
@@ -12176,7 +12117,7 @@ function handleLoginRequestResponse()//处理登录请求响应
 		if(xmlhttpLogin.status==200)//200 代表请求成功
 		{
 			var result= JSON.parse(xmlhttpLogin.responseText)//JSON.parse() 方法可以将一个 JSON 字符串解析成为一个 JavaScript 值
-			//console.log("login.hs handleLoginRequestResponse"+xmlhttpLogin.responseText)
+			// console.log("login.hs handleLoginRequestResponse"+xmlhttpLogin.responseText)
 			if(result.code=="0") //success
 			{
              //1008修改登录方式 start
@@ -12234,7 +12175,7 @@ function handleLoginRequestResponse()//处理登录请求响应
 function sendVerifyRequest(uid,needSha1)//发送验证请求
 {
 	if(needSha1){
-		//console.log("login.js sendVerifyRequest:uid:"+uid)
+		console.log("login.js sendVerifyRequest:uid:"+uid)
 		var shaObj = new jsSHA("SHA-1", "TEXT");
 		shaObj.update(uid);
 		uid = shaObj.getHash("HEX");
@@ -12300,7 +12241,7 @@ function kickws(justSendMsg)
 
 function requestLogin(user)//请求登录
 {
-	//console.log("requestLogin:111111111111111111",user)
+	// console.log("requestLogin:111111111111111111",user)
 	xmlhttpLogin = new XMLHttpRequest()
 	xmlhttpLogin.onreadystatechange = handleLoginRequestResponse
 	xmlhttpLogin.ontimeout = function (){
@@ -12345,7 +12286,7 @@ function handleCommitButtonClicked()//处理 允许点击按钮
 
 function updateLoginState(justAdjustPosition)
 {
-	//console.log("updateLoginState:",localStorage.autoLoginFlag+" loginState:"+loginState)
+	// console.log("updateLoginState:",localStorage.autoLoginFlag+" loginState:"+loginState)
 	if(loginContainerDiv==undefined)//登陆容器Div
 	{
 		loginContainerDiv = document.getElementById("loginContainerDiv")
@@ -12398,7 +12339,7 @@ function updateLoginState(justAdjustPosition)
 	// 1008修改登录方式 if((localStorage.autoLoginFlag=="true") && (localStorage.sn !=""))  //undefined or false,need confirm
 	if((localStorage.uidInitialized=="true") && (localStorage.sn !="")) // 1008修改登录方式 
 	{
-		//console.log("updateLoginState:111111111111111111")
+		// console.log("updateLoginState:111111111111111111")
 	
 		loginContentTable.style.display="none"
 		loginProgressTipsDiv.style.display="block"
@@ -12407,7 +12348,7 @@ function updateLoginState(justAdjustPosition)
 	}
 	else
 	{
-		//console.log("updateLoginState:2222222222222")
+		console.log("updateLoginState:2222222222222")
 		loginContentTable.style.display="block"
 		loginProgressTipsDiv.style.display="none"
 		loginContainerDiv.style.display="block"
@@ -12453,8 +12394,11 @@ function initWorkspaceEnv(){//初始化工作环境
 	if("undefined" == (typeof envInfo))//环境信息中的一个
 	{
 		//alert("setInterval success with html")
+		// console.log(123);
 		lastIntervalTimerID = setInterval(checkAndUpdateStateRegularly,1000)/*setInterval() 方法可按照指定的周期（以毫秒计）来调用函数或计算表达式。 调用函数checkAndUpdateStateRegularly每1000毫秒
-                       // 最后间隔定时器                                                                                                    setInterval() 方法会不停地调用函数，直到 clearInterval() 被调用或窗口被关闭。由 setInterval() 返回的 ID 值可用作 clearInterval() 方法的参数。*/
+                       // 最后间隔定时
+					   
+						                                                                                                     setInterval() 方法会不停地调用函数，直到 clearInterval() 被调用或窗口被关闭。由 setInterval() 返回的 ID 值可用作 clearInterval() 方法的参数。*/
 	}
 	
 	//showDebugInfo()
@@ -12463,7 +12407,7 @@ function initWorkspaceEnv(){//初始化工作环境
 var gFirstLoadFlag = false;
 window.onload = function(){
 
-// setTimeout(function(){
+setTimeout(function(){
 	// 1008修改登录方式 if((localStorage.uidInitialized==undefined || localStorage.uidInitialized=="") && (localStorage.sn !=""))
 	// 1008修改登录方式 	localStorage.autoLoginFlag=true  // if first time run and server not response when user quit,it should login auto next time
 	gFirstLoadFlag = true;
@@ -12474,13 +12418,13 @@ window.onload = function(){
 
 	if("undefined" != (typeof envInfo) )
 	{
-	//console.log("window.onload and envInfo",envInfo)
+	console.log("window.onload and envInfo",envInfo)
 	curOrientation= envInfo.getOrientation()
-	//console.log("window.onload and curOrientation",curOrientation)
+	console.log("window.onload and curOrientation",curOrientation)
 	}
 	updateLoginState()
-	//setAgent("10")//代理渠道号  二维码信息函数
-// },5000)
+},5000)
+
 }
 
 document.body.onkeyup=handleKeyUp
@@ -12494,7 +12438,7 @@ function updateInterval()//更新间隔
 function updateOrientation()//更新定位方向
 {
 	//showOrientationDiv(true)
-	//console.log("updateOrientation called <br />"+(typeof envInfo) )
+	console.log("updateOrientation called <br />"+(typeof envInfo) )
 	if("undefined" != (typeof envInfo))
 	{
 		curOrientation= envInfo.getOrientation()
@@ -12506,15 +12450,16 @@ function updateOrientation()//更新定位方向
 				{destPrizeItemCount = 40}
 		}
 		
+		//requestLotteryData(curLotteryTypeName,destPrizeItemCount)
 		updateTableContentFlag=true
 		updateTableContentWithRequestData = true
 		updateTableContentInterval=3
 	}
-	//console.log("updateOrientation called end <br />")
+	console.log("updateOrientation called end <br />")
 }
 function handleQuit()//处理退出
 {
-	//console.log("handleQuit called to clear some resource <br />")
+	console.log("handleQuit called to clear some resource <br />")
 	
 	if(lastIntervalTimerID != undefined)
 	{
@@ -12595,9 +12540,9 @@ function checkHtmlInputActive()
 // check net work start // 1008修改登录方式 start
 ///////////////////////////
 var checkXmlHttp
-var doCheckConnectionCount=0//连接次数
-var doCheckConnectionTimes=0//连接超时
-var networkErrorTipsVisible=false//网络错误提示可见
+var doCheckConnectionCount=0
+var doCheckConnectionTimes=0
+var networkErrorTipsVisible=false
 function doCheckRequest()
 {
 	if(doCheckConnectionCount < 5)
@@ -12618,7 +12563,7 @@ function handleDoCheckRequest()
 		{
 
 			doCheckConnectionCount=0
-			if(networkErrorTipsVisible)//networkErrorTipsVisible位true则显示错误信息
+			if(networkErrorTipsVisible)
 			{
 				networkErrorTipsVisible=false
 				floatDiv.style.display="none"
@@ -12640,7 +12585,6 @@ function showNetworkErrorTips()
 {
 	if(styleTitleDiv){
 		styleTitleDiv.style.backgroundColor = "red";
-		styleTitleDiv.innerHTML = "网络异常"
 	}
 	networkErrorTipsVisible = true
 	// showSysEventFloat(5,"网络异常，请确认网络是否正常！") 

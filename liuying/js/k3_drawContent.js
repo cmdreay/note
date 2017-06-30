@@ -39,7 +39,7 @@ var tableHeight//元素表的高
 var tbodyHeight//整个程序的高  就是包括表头表尾所有加载一起
 var tableColumCount=0    //不需要画线的格数
 var tableRowCount=0  //行数
-var trendCellCount=0  //需要话曲线的列个数
+var trendCellCount=0  //需要画曲线的列个数
 var prevAreaPrizeNumMax = 33  //ssq; 35for dlt 双色球前区33
 var backAreaPrizeNumMax = 16 //ssq; 12for dlt 双色球后区16
 var prevAreaPrizeNumLength = 5 //ssq ;6 for dlt //双色球号码长度 就是几个号码
@@ -1232,6 +1232,7 @@ function adjustfySizeInfo()
 
 		}
 	}
+	console.log(widthSquarCount);
 	tableCellWidth = Math.floor((tableWidth -(innerTableCount-1)-tableColumCount - trendCellCount-innerTableCount) / widthSquarCount);   //cell border-width:1px
                     //因为表格边框重复的是表格数-1个
 	var trendWidth = ((tableWidth -(innerTableCount-1)-tableColumCount - trendCellCount)-tableCellWidth*tableColumCount) //考虑border-width
@@ -1404,10 +1405,11 @@ function configLotteryInfo()
 
 
 function initNumberMatrix(startRow)
-{
+{	console.log("sndsnfnsdfnd")
 	//console.log("initNumberMatrix 111111",curLotteryTypeDataList.length)
 	if(numberMatrix==undefined)
 		numberMatrix = new Array()
+		console.log(curLotteryTypeDataList);
 	for(var i=Math.min(numberMatrix.length,startRow);i<curLotteryTypeDataList.length;i++)
 	{
 		numberMatrix[i]=new Array();
@@ -1872,6 +1874,7 @@ function getCellHTMLk3(type,w,h,v){
 function _createHeader(tableObj,titleTxt,w,h,minVal,maxVal,typeone,typej7,typek10,typek10Green,typek10Green3,typek3ZC,typek3GJ,typek3JB,typek3JB1,typej7l1,typej7l1JHZS,typej7l2,typek12JD,typek12JDHistory,typeJLK3Danshuang,typeJLK3012,type11x5GreenZuXuan,type11x5Green2,type11x5KDZS,big30Small)
 {	
 	var r = tableObj.insertRow(tableObj.rows.length)
+	console.log(r);
 	r1 = tableObj.insertRow(tableObj.rows.length)
 	if(minVal ==undefined || maxVal==undefined||typeJLK3Danshuang||typeJLK3012||typej7l1||big30Small)
 	{		

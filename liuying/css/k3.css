@@ -27,6 +27,7 @@ body{
 	border:0px;
 	background: white;
 	position: absolute;
+	padding-top:20px;
 	z-index: 2;
 	display: none;
 }
@@ -34,7 +35,7 @@ body{
 	width: 400px;
 	height: 200px;
 	margin-left: 155px;
-	margin-top: 75px;
+	/*margin-top: 75px;*/
 }
 #captionlayoutdiv {
 	width:100%;
@@ -270,62 +271,6 @@ table td, table th { /*设置字体样式*/
 	text-align: center; 
 }
 
-.hollowball{
-	margin: 0px auto; 
-	padding: 0px;
-	border-width:1px;
-	border-radius:50%;
-	border-style:solid;
-	/*border-color: red;*/
-	/*background:grey ;*/
-	font-size:15px;
-	letter-spacing:-2px;
-	text-align: center; 
-}
-.bigball{
-	margin: 0px auto; 
-	padding: 0px;
-	border-width:0px;
-	border-radius:50%;
-	background:grey ;
-	color:white;
-	font-size:15px;
-	letter-spacing:-2px;
-	text-align: center; 
-}
-.smallball{
-	margin: 0px auto; 
-	padding: 0px;
-	border-width:0px;
-	border-radius:50%;
-	background:grey ;
-	color:white;
-	font-size:15px;
-	letter-spacing:-2px;
-	text-align: center; 
-}
-.oneball{
-	margin: 0px auto; 
-	padding: 0px;
-	border-width:0px;
-	border-radius:50%;
-	background:grey ;
-	color:white;
-	font-size:15px;
-	letter-spacing:-2px;
-	text-align: center; 
-}
-.twoball{
-	margin: 0px auto; 
-	padding: 0px;
-	border-width:0px;
-	border-radius:50%;
-	background:grey ;
-	color:white;
-	font-size:15px;
-	letter-spacing:-2px;
-	text-align: center; 
-}
 .sandyBrownball{
 	margin: 0px auto; 
 	padding: 0px;
