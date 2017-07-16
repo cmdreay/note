@@ -1,0 +1,55 @@
+<html>
+
+<head>
+    <style>
+        #d{
+            width:50px;
+            height: 50px;
+            margin:0 auto;
+            background-color:Red;
+            border-radius: 50%;
+        }
+    </style>
+</head>
+
+<body>
+<div id="d">
+js控制大小
+</div>
+<script>
+/*
+var i=1;
+var j=40;
+var k=0;
+function sizeChangeBigger()
+{
+if(i!=40)
+i++;
+document.getElementById("d").style.fontSize=i;
+}
+function sizeChangeSmaller()
+{
+if(j!=1)
+j--;
+document.getElementById("d").style.fontSize=j;
+}
+ 
+setInterval("sizeChangeBigger()",80);
+*/
+var kk=0;
+var bb=0;
+var a1 = document.getElementById("d");
+function sizeChange()
+{
+if(kk>100){kk=0;}
+else if(kk>50){bb=100-kk;}
+else bb=kk;
+kk++;
+a1.style.width=bb+50;
+a1.style.marginTop = -kk*0.25;
+a1.style.height=bb+50;
+}
+setInterval("sizeChange()",80);
+</script>
+</body>
+</html>
