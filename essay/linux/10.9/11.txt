@@ -1,0 +1,1 @@
+ERVER-1 [con] 10.10.10.1 suc [con] 10.10.10.2 fai [dis] 10.10.10.3 pen [con] 10.10.10.4 suc SERVER-2 [con] 10.10.10.5 suc [con] 10.10.10.6 fai [dis] 10.10.10.7 pen [con] 10.10.10.8 suc SERVER-3 [con] 10.10.10.9 suc [con] 10.10.10.10 fai [dis] 10.10.10.11 pen [con] 10.10.10.12 suc

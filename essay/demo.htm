@@ -14,7 +14,8 @@
 
 <body>
 <div id="d">
-js控制大小
+jsssssssssss
+<script>console.log(123)</script>
 </div>
 <script>
 /*
@@ -36,20 +37,69 @@ document.getElementById("d").style.fontSize=j;
  
 setInterval("sizeChangeBigger()",80);
 */
-var kk=0;
-var bb=0;
-var a1 = document.getElementById("d");
-function sizeChange()
-{
-if(kk>100){kk=0;}
-else if(kk>50){bb=100-kk;}
-else bb=kk;
-kk++;
-a1.style.width=bb+50;
-a1.style.marginTop = -kk*0.25;
-a1.style.height=bb+50;
+// var kk=0;
+// var bb=0;
+// var a1 = document.getElementById("d");
+// function sizeChange()
+// {
+// if(kk>100){kk=0;}
+// else if(kk>50){bb=100-kk;}
+// else bb=kk;
+// kk++;
+// a1.style.width=bb+50;
+// a1.style.marginTop = -kk*0.25;
+// a1.style.height=bb+50;
+// }
+// setInterval("sizeChange()",80);
+
+var currying = function(fn) {
+    // fn 指官员消化老婆的手段
+    var args = [].slice.call(arguments, 1);
+    console.log(args);
+    // args 指的是那个合法老婆
+    return function() {
+        // 已经有的老婆和新搞定的老婆们合成一体，方便控制
+        var newArgs = args.concat([].slice.call(arguments));
+        // 这些老婆们用 fn 这个手段消化利用，完成韦小宝前辈的壮举并返回
+        return fn.apply(null, newArgs);
+    };
+};
+
+// 下为官员如何搞定7个老婆的测试
+// 获得合法老婆
+var getWife = currying(function() {
+    var allWife = [].slice.call(arguments);
+    // allwife 就是所有的老婆的，包括暗渡陈仓进来的老婆
+    console.log(allWife.join(";"));
+}, "合法老婆");
+var abc = currying(("大老婆","小老婆","俏老婆","刁蛮老婆","乖老婆","送上门老婆"),"sdf");
+// 获得其他6个老婆
+getWife("大老婆","小老婆","俏老婆","刁蛮老婆","乖老婆","送上门老婆");
+
+// 换一批老婆
+getWife("超越韦小宝的老婆");
+function Product(name, price) {
+  this.name = name;
+  this.price = price;
 }
-setInterval("sizeChange()",80);
+
+function Food(name, price) {
+  Product.call(this, name, price);
+  this.category = 'food';
+}
+
+function Toy(name, price) {
+  Product.call(this, name, price);
+  this.category = 'toy';
+}
+
+var cheese = new Food('feta', 5);
+var fun = new Toy('robot', 40);
+console.log(cheese)
+console.log(fun)
+
+var a 
+console.log(a?false:3?4:5)
 </script>
 </body>
 </html>

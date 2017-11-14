@@ -1,0 +1,241 @@
+<html>
+
+<head>
+    <style>
+
+    </style>
+</head>
+
+<body>
+
+    <div id="div1">
+        111111111
+    </div>
+    <ul>
+        <li class="top">
+            <div><span>1</span></div>
+        </li>
+        <li class="top">
+            <div><span>2</span></div>
+        </li>
+        <li><span>3</span></li>
+        <li><span>4</span></li>
+        <li><span>5</span></li>
+    </ul>
+    <div id="axx">111111111111111</div>
+    <script src="httprequest.js"></script>
+    <script>
+        var url = ""
+        request({
+            method:'post',
+            url:'http://pub.88zst.com:3000/user/customer/selfGen',
+            body:'{"stationid"}'
+        })
+
+
+        console.log({
+            "1":"nnn",
+            "2":'nnnnn'
+        })
+        function f1() {
+            var n = 999;
+            
+            function f2() {
+                console.log(n);
+                n++;
+            }
+            
+            return f2;
+        }
+        var result = f1();
+        result(); // 999
+        result(); // 1000
+
+
+
+
+
+
+
+
+        var a = "?" > "}"
+        console.log(a);
+        var s2 = 0;
+        function Timer() {
+            this.s1 = 0;
+            this.s2 = 0;
+            // 箭头函数
+            setInterval(() => this.s1++, 1000);
+            // 普通函数
+            setInterval(function () {
+                this.s2++;
+                // console.log(this)
+            }, 1000);
+        }
+
+        var timer = new Timer();
+
+        setTimeout(() => console.log('s1: ', timer.s1), 3100);
+        setTimeout(() => console.log('s2: ', timer.s2), 3100);
+
+
+
+
+        const numbers = (...num) => num;
+        let a1 = numbers(1, 2, 3, 4, 5, 6);
+        console.log(numbers(1, 2, 3, 4, 5, 6));
+        // function fn(a = 3,b = 4){
+        //     console.log(a + ","+ b)
+        // }
+        // fn(false,3);
+        // var a = () => 5;
+        // console.log(a());
+        // console.log(fn.name);
+        var oLi = document.querySelectorAll(".top span");
+        console.log(oLi);
+        var mtable = document.createElement('table');
+        var axxxx = "background-color:red;font-size:12px;color:white"
+        var oAxx = document.getElementById("axx");
+        oAxx.setAttribute("style",axxxx);
+        // #f4f4f4
+        // curLotteryTypeStyleName.indexOf("快彩") >= 0 && curLotteryTypeName.indexOf("快3") >= 0
+        mtable.width = 200;
+        mtable.height = 200;
+        var r = mtable.insertRow(0);
+        var td = r.insertCell(0);
+        td.height = 20;
+        td.innerHTML = "123"
+        td.style.color = a.color;
+        td.style.backgroundColor = a.backgroundColor;
+        document.documentElement.appendChild(mtable);
+        console.log(a);
+        var a = [];
+        for (var i = 0; i < 6; i++) {
+            a[i] = function () {
+                console.log(i);
+            }();
+        }
+        // console.log(a[4]);
+        // console.log(i);
+        var tmp = new Date();
+
+        function f() {
+            console.log(tmp);
+            if (false) {
+                let tmp = 'hello world';
+            }
+        }
+        f();
+        const a3 = 1;
+        console.log()
+        let { baz, foo, bar1 } = { baz: "111", foo: "aaa", bar1: "bbb" }
+        var a = baz
+        console.log(a);
+        let { bar, foo1 } = { foo1: "aaa", bar: "bbb" };
+        console.log(foo1)
+        // let {bar3:bar2 } = { bar3: { baz: 'baz' } };
+        // console.log(bar3)
+        // [({ p: a }), { x: c }] = [{}, {}];
+        // let x = 1;
+        // let y = 2;
+
+        var { x: y = 3 } = { x: 5 };
+        console.log(y)
+        var { x: y = 3 } = {};
+        var aa = "12312132"
+        console.log(y);
+        console.log(`sljflsdj${aa}
+        sdfjklsdfjlsdkjf`)
+        console.log(`123`);
+        var as = `12${aa}3`
+        console.log(as);
+        console.log(0o11)
+        console.log(2 ** 4);
+        // console.log(typeof Integer(123));
+        function fetch(url, { body = '', method = 'GET', headers = {} } = {}) {
+            console.log(method);
+        }
+        fetch("http:www.baidu.com");
+
+        //  will-change z-index:10000
+
+
+
+
+
+        // 黑龙江11选5 大乐透 双色球 吉林11选5 河北11选5 3D
+        // 排列3 金7乐 河北快3 浙江福彩快乐彩 北京快3 七星彩
+        // 云南快乐十分 泳坛夺金481 北京快乐8 辽宁快乐12
+
+
+    </script>
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+@-webkit-keyframes fn {
+	0% { 
+		transform: scale(1) ;
+	 }
+	 12%{
+		transform: scale(1.12) ;
+	 }
+	 25%{
+		transform: scale(1.25) ;
+	 }
+	 37%{
+		transform: scale(1.37) ;
+	 }
+	50% { 
+		transform: scale(1.50) ;
+	}
+	62%{
+		transform: scale(1.37) ;
+	}
+	75%{
+		transform: scale(1.25) ;
+	}
+	87%{
+		transform: scale(1.12) ;
+	}
+	100%{
+		transform: scale(1) ;
+	}
+}
+@keyframes fn {
+	0% { 
+		transform: scale(1) ;
+	 }
+	 12%{
+		transform: scale(1.12) ;
+	 }
+	 25%{
+		transform: scale(1.25) ;
+	 }
+	 37%{
+		transform: scale(1.37) ;
+	 }
+	50% { 
+		transform: scale(1.50) ;
+	}
+	62%{
+		transform: scale(1.37) ;
+	}
+	75%{
+		transform: scale(1.25) ;
+	}
+	87%{
+		transform: scale(1.12) ;
+	}
+	100%{
+		transform: scale(1);
+	}
+}

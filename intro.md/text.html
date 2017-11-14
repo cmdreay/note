@@ -1,0 +1,36 @@
+<html>
+    <body>
+        <script>
+            var arr=[{
+                1:'a'
+            },{
+                2:'b'
+            },{
+                3:'c'
+            }];
+            // console.log(arr.splice(1,2));
+            document.onkeydown=function(e){
+                var e=event.srcElement;
+                console.log(event.keyCode);
+            }
+            var a;
+            var b=1;
+            var c;
+            if(a!=undefined){
+                console.log(a);
+            }
+            else if(b){
+                console.log(b);
+            }
+            console.log(c);
+            function aaa()
+            {
+                return 1+'aa';
+            }
+            function bbb(){
+                return 2+aaa()
+            }
+            console.log(bbb());
+        </script>
+    </body>
+</html>
