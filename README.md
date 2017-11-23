@@ -1,7 +1,7 @@
 ### note索引
 #### linux
 + [linux升级chrome打不开问题解决方案](https://github.com/cmdreay/note/blob/master/essay/linux/linux_chrome_pro.md)
-
++ [常用命令(待更新)](https://github.com/cmdreay/note/tree/master/essay/linux)
 #### vue
 + [vue开发遇到的问题 心得和解决方案~~](https://github.com/cmdreay/note/blob/master/essay/day11_14.md)
 
