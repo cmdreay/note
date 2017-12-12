@@ -12,7 +12,7 @@
 ### js && es6相关
 + [关于Promise和 async await语法的一些练习](https://github.com/cmdreay/note/blob/master/essay/day11_20.md)
 + [array.prototype.map() array.prototype.filter()  array.prototype.foreach()三者比较](https://github.com/cmdreay/note/blob/master/essay/es6/day11_20.md)
-+ [es6 MAP数据结构](https://github.com/cmdreay/note/blob/master/essay/es6/day12_12.md))
++ [es6 MAP数据结构](https://github.com/cmdreay/note/essay/node/day12_12.md)
 
 
 
