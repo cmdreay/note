@@ -2,6 +2,5 @@
 echo 'git自动提交'
 git add --all
 git commit -m $1
-git pull
-git push
-echo 'git执行完成'
+git pull 
+git push 
