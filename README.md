@@ -1,6 +1,6 @@
 ### note索引
 #### linux
-+ [linux升级chrome打不开问题解决方案](https://github.com/cmdreay/note/blob/master/essay/linux/linux_chrome_pro.md)
++ [linux升级chrome打不开问题解决方案(已失效)](https://github.com/cmdreay/note/blob/master/essay/linux/linux_chrome_pro.md)
 + [常用命令(待更新)](https://github.com/cmdreay/note/tree/master/essay/linux)
 #### vue
 + [vue开发遇到的问题 心得和解决方案~~](https://github.com/cmdreay/note/blob/master/essay/day11_14.md)
@@ -13,7 +13,7 @@
 + [关于Promise和 async await语法的一些练习](https://github.com/cmdreay/note/blob/master/essay/day11_20.md)
 + [array.prototype.map() array.prototype.filter()  array.prototype.foreach()三者比较](https://github.com/cmdreay/note/blob/master/essay/es6/day11_20.md)
 + [es6 MAP数据结构](https://github.com/cmdreay/note/blob/master/essay/node/day12_12.md)
-
++ [原生的一些判断](https://github.com/cmdreay/note/blob/master/essay/es6/day4_24.md)
 
 
 
