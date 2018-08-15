@@ -16,9 +16,9 @@
 + [原生的一些判断](https://github.com/cmdreay/note/blob/master/essay/es6/day4_24.md)
 
 ### redis
-TTL key 查看过期时间
-keys * 查看所有keys
-keys还可以模糊查询 e.g`keys mector:token:180*`查询某手机号的token
++ TTL key 查看过期时间
++ keys * 查看所有keys
++ keys还可以模糊查询 e.g`keys mector:token:180*`查询某手机号的token
 
 
 
