@@ -37,17 +37,17 @@
 `ssh-copy-id -i ~/.ssh/id_rsa.pub`复制到服务器上的~/.ssh/authorized_keys中免密登录  
 自己写的一个上传服务器文件的脚本
   
-    if [ !-n $1 ]; then
-     echo "请输入参数"
-     exit
-    fi
-    if [ $1 = "test" ]; then
-    echo "上传至测试服务器"
-    scp -r ./dist/ roo@testuri:/home/zhaoyu/docker/app/www/
-    elif [ $1 = "pro" ]; then
-    echo "上传至正式服务器"
-    scp -r ./dist/ root@prouri:/var/www/
-    else
-    echo "请填写参数test或pro"
-    fi
+      if [ !-n $1 ]; then
+       echo "请输入参数"
+       exit
+      fi
+      if [ $1 = "test" ]; then
+      echo "上传至测试服务器"
+      scp -r ./dist/ roo@testuri:/home/zhaoyu/docker/app/www/
+      elif [ $1 = "pro" ]; then
+      echo "上传至正式服务器"
+      scp -r ./dist/ root@prouri:/var/www/
+      else
+      echo "请填写参数test或pro"
+      fi
 
