@@ -30,3 +30,8 @@
 + -v：显示所有过程
 
 + -O：将文件解开到标准输出
+
+
+
+8.21update
+`ssh-copy-id -i ~/.ssh/id_rsa.pub`复制到服务器上的~/.ssh/authorized_keys中免密登录  
