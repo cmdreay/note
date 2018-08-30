@@ -1,4 +1,7 @@
 ### note索引
+#### 近期要做的事情
++ koa源码
++ egg 掌握
 #### linux
 + [linux升级chrome打不开问题解决方案(已失效)](https://github.com/cmdreay/note/blob/master/essay/linux/linux_chrome_pro.md)
 + [常用命令(待更新)](https://github.com/cmdreay/note/tree/master/essay/linux)
