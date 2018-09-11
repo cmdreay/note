@@ -24,6 +24,8 @@
 + keys * 查看所有keys
 + keys还可以模糊查询 e.g`keys mector:token:180*`查询某手机号的token
 
+### android
++ [android实际工作手册](https://github.com/cmdreay/note/edit/master/qs.md)
 
 
 
