@@ -27,7 +27,8 @@
 ### android
 + [android实际工作手册](https://github.com/cmdreay/note/blob/master/qs.md)
 
-
+### java问题(android)
++ [学习android过程中的java问题](./java/android_java.md)
 
 
 
