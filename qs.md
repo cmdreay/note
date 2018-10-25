@@ -264,10 +264,10 @@ File是通过FileInputStream和FileOutputStream对文件进行操作
 参考：https://blog.csdn.net/zhou_wenchong/article/details/54019708
 FileInputStream的available()获取文件的总大小
 + okHttp请求遇到的问题
-post请求参考 https://blog.csdn.net/laizixingxingdewo/article/details/78773440
-gson 对象转json
-okHttp 封装参考 https://blog.csdn.net/FunnyLe/article/details/78605929
-OkHttpClient execute同步方法 会阻塞线程（界面卡住） enqueue异步方法
-JSONObject生成和解析json 参考：https://www.cnblogs.com/joahyau/p/6736637.html
-https://www.jianshu.com/p/bc293cab1c8e 网络缓存
+	+ post请求参考 https://blog.csdn.net/laizixingxingdewo/article/details/78773440
+	+ gson 对象转json
+	+ okHttp 封装参考 https://blog.csdn.net/FunnyLe/article/details/78605929
+	+ OkHttpClient execute同步方法 会阻塞线程（界面卡住） enqueue异步方法
+	+ JSONObject生成和解析json 参考：https://www.cnblogs.com/joahyau/p/6736637.html
+	+ https://www.jianshu.com/p/bc293cab1c8e 网络缓存
 
