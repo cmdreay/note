@@ -45,6 +45,9 @@ libserial_port是为了安卓设备操作串口
 		handler.postDelayed(this, 2000);
     ** handleMessage 处理消息的方法
     ** sendEmptyMessage(int what):发送空消息
+
+在Android启动线程和JAVA一样有两种方式，一种是直接创建Thread类对象，然后调用start方法，也就是一般写一个自己自定义的类来继承Thread类，然后调用start方法启动
+另外一种方式就是实现Runnable接口，然后把实现了Runnable接口的子类对象传递给Thread类，同样要start这个线程。
 13. AsyncTask,即异步任务,是Android给我们提供的一个处理异步任务的类.通过此类,可以实现UI线程和后台线程进行通讯,后台线程执行异步任务,并把结果返回给UI线程.比如网络操作,文件读取等耗时操作  //通过调用execute方法开始处理异步任务.相当于线程中的start方法.
 参考blog: https://blog.csdn.net/u013164293/article/details/51506835 https://www.cnblogs.com/caobotao/p/5020857.html
 14. <action android:name="android.intent.action.MAIN" /> action节点中的android.intent.action.MAIN表明它所在的Activity是整个应用程序的入口点，category中的android.intent.category.LAUNCHER意思是把这个Activityg归属到加载器类,即把这个Activity标注为自动会加载和启动的Activity,这样程序启动时候就先加载这个Activity了.
@@ -74,7 +77,13 @@ Fragment是依赖于Activity的，不能独立存在的。
 一个Activity里可以有多个Fragment。
 一个Fragment可以被多个Activity重用。
 Fragment有自己的生命周期，并能接收输入事件。
-我们能在Activity运行时动态地添加或删除Fragment。
+我们能在Activity运行时动态地添加或删除Fragment。 参考：https://www.cnblogs.com/guop/p/5072572.html
+	动态添加碎片主要分为5步。
+		1.创建待添加的碎片实例。
+		2.获取到FragmentManager，在活动中可以直接调用getFragmentManager()方法得到。
+		3.开启一个事务，通过调用beginTransaction()方法开启。
+		4.向容器内加入碎片，一般使用replace()方法实现，需要传入容器的id和待添加的碎片实例。
+		5.提交事务，调用commit()方法来完成。
 
 优势：
 模块化（Modularity）：我们不必把所有代码全部写在Activity中，而是把代码写在各自的Fragment中。
@@ -241,4 +250,24 @@ appContext = (your application obj)this.getApplicationContext();
   List接口不能被构造 也就是我们说的不能创建实例对象 但是我们可以像下面那样为List接口创建一个指向自己的对象引用 
   而ArrayList实现类的实例对象就在这充当了这个指向List接口的对象引用 这也是多态的一种:`List<String> list = new ArrayList<String>();`
   + 第一次给集合添加元素的时候 集合中数组的长度会被设置成10   每次数组元素满了以后 重新给数组设置的长度为  原数组长度+(原数组长度/2)
+*****
+ final指的是“这是不可变的” 4中修饰用法 参考：https://www.cnblogs.com/dotgua/p/6357951.html
+  getApplicationContext() 返回应用的上下文，生命周期是整个应用，应用摧毁它才摧毁
++ 点击事件的四种写法：参考：https://www.cnblogs.com/smyhvae/p/4375710.html
+*****
+**********
+List和String互相转换 https://www.cnblogs.com/jingjingWang/p/3355454.html
+**********
+
++ android文件相关操作
+File是通过FileInputStream和FileOutputStream对文件进行操作
+参考：https://blog.csdn.net/zhou_wenchong/article/details/54019708
+FileInputStream的available()获取文件的总大小
++ okHttp请求遇到的问题
+post请求参考 https://blog.csdn.net/laizixingxingdewo/article/details/78773440
+gson 对象转json
+okHttp 封装参考 https://blog.csdn.net/FunnyLe/article/details/78605929
+OkHttpClient execute同步方法 会阻塞线程（界面卡住） enqueue异步方法
+JSONObject生成和解析json 参考：https://www.cnblogs.com/joahyau/p/6736637.html
+https://www.jianshu.com/p/bc293cab1c8e 网络缓存
 
