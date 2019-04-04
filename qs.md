@@ -48,11 +48,12 @@ libserial_port是为了安卓设备操作串口
 
 在Android启动线程和JAVA一样有两种方式，一种是直接创建Thread类对象，然后调用start方法，也就是一般写一个自己自定义的类来继承Thread类，然后调用start方法启动
 另外一种方式就是实现Runnable接口，然后把实现了Runnable接口的子类对象传递给Thread类，同样要start这个线程。
+
 13. AsyncTask,即异步任务,是Android给我们提供的一个处理异步任务的类.通过此类,可以实现UI线程和后台线程进行通讯,后台线程执行异步任务,并把结果返回给UI线程.比如网络操作,文件读取等耗时操作  //通过调用execute方法开始处理异步任务.相当于线程中的start方法.
 参考blog: https://blog.csdn.net/u013164293/article/details/51506835 https://www.cnblogs.com/caobotao/p/5020857.html
+
 14. <action android:name="android.intent.action.MAIN" /> action节点中的android.intent.action.MAIN表明它所在的Activity是整个应用程序的入口点，category中的android.intent.category.LAUNCHER意思是把这个Activityg归属到加载器类,即把这个Activity标注为自动会加载和启动的Activity,这样程序启动时候就先加载这个Activity了.
-15. 
-在当前Activity1使用startActvity(intent)或者startActivityForResult(intent, code)方法跳转到另一个Activity2之前，如果要传递数据给Activity2，则会执行:
+15. 在当前Activity1使用startActvity(intent)或者startActivityForResult(intent, code)方法跳转到另一个Activity2之前，如果要传递数据给Activity2，则会执行:
 
 Activity1:
 
@@ -223,7 +224,7 @@ appContext = (your application obj)this.getApplicationContext();
 参考：https://blog.csdn.net/cswhale/article/details/38659245
 
 ``````````````````````````
-+ SimpleDateFormat格式化时间类
++ SimpleDateFormat格式化时间类`new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(new Date())`
 
 + String 是java中的字符串，它继承于CharSequence，CharSequence是一个接口 StringBuilder 和 StringBuffer都是可变的字符序列。
 
@@ -260,9 +261,9 @@ List和String互相转换 https://www.cnblogs.com/jingjingWang/p/3355454.html
 **********
 
 + android文件相关操作
-File是通过FileInputStream和FileOutputStream对文件进行操作
-参考：https://blog.csdn.net/zhou_wenchong/article/details/54019708
-FileInputStream的available()获取文件的总大小
+	File是通过FileInputStream和FileOutputStream对文件进行操作
+	参考：https://blog.csdn.net/zhou_wenchong/article/details/54019708
+	FileInputStream的available()获取文件的总大小
 + okHttp请求遇到的问题
 	+ post请求参考 https://blog.csdn.net/laizixingxingdewo/article/details/78773440
 	+ gson 对象转json
@@ -270,4 +271,26 @@ FileInputStream的available()获取文件的总大小
 	+ OkHttpClient execute同步方法 会阻塞线程（界面卡住） enqueue异步方法
 	+ JSONObject生成和解析json 参考：https://www.cnblogs.com/joahyau/p/6736637.html
 	+ https://www.jianshu.com/p/bc293cab1c8e 网络缓存
++ 控件EditText状态改变 参考：http://bcoder.com/java/solution-to-make-edittext-readonly-and-re-editable-in-android
+	edit不换行 参考：http://www.runoob.com/w3cnote/android-tutorial-edittext.html
++ android activity 生命周期 参考：https://www.cnblogs.com/lwbqqyumidi/p/3769113.html
++ 关于序列化，常又称为持久化，将其写入磁盘中。 参考：http://www.runoob.com/java/java-serialization.html
+	进而对于编码规则来说：
+	任一一个实体类必须要去实现 Serializable 接口，方便以后将该类持久化，或者将其用于转为字节数组，用于网络传输。
+	对于一个实体类，不想将所有的属性都进行序列化，有专门的关键字 transient
+        ** Gson 就是通过序列化和反序列化实现对象转json和 json转对象 **
++ android 注释参考(很重要) https://www.jianshu.com/p/54e8964730b4
++ as 断点调试(important) https://blog.csdn.net/yy1300326388/article/details/46501871
+
+
+
+
+***************************
+
+intent.setFlags方法中的参数值含义:参考：https://blog.csdn.net/berber78/article/details/7278408
+
+//设置窗体全屏  getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN); 
+Android setTag和getTag()的使用 参考：https://blog.csdn.net/yelangjueqi/article/details/9666037
+***************************
+static{}(即static块)，会在类被加载的时候执行且仅会被执行一次，一般用来初始化静态变量和调用静态方法
 
