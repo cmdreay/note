@@ -30,7 +30,8 @@
 ### java问题(android)
 + [学习android过程中的java问题](./java/android_java.md)
 
-
+### 小程序
++ [用promise的方式封装wx.request](./node/request.js)
 
 
 ## 所接触的内容
