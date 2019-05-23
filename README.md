@@ -1,4 +1,5 @@
 ### note索引
++ [node异步相关](./node/node异步相关.md)
 #### 近期要做的事情
 + koa源码
 + egg 掌握
