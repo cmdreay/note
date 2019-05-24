@@ -39,4 +39,4 @@
   查看MDN中关于await的解释
   >An async function can contain an await expression that pauses the execution of the async function and waits for the passed Promise's resolution, and then resumes the async function's execution and returns the resolved value.
   
-  也就是说在执行完await语句之前程序会一直保持暂停态，如果放在for循环中，结果会按顺序一个一个地串行执行下去，会把执行时间拉长，一般情况下for循环中都是可并发的执行语句，如果希望执行完统一处理可以使用``Promise.all(arr.map((item) => excute))``,promise.all参考MDN用法
+  也就是说在执行完await语句之前程序会一直保持暂停态，如果放在for循环中，结果会按顺序一个一个地串行执行下去，会把执行时间拉长，并不能高效利用NODE异步I/O的特性，一般情况下for循环中都是可并发的执行语句，如果希望执行完统一处理可以使用``Promise.all(arr.map((item) => execute))``,promise.all参考MDN用法
