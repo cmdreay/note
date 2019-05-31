@@ -26,3 +26,23 @@ const request = ({url, method, data, header, dataType, responseType}) => {
         })
     });
 }
+/** wx中promise没有finally方法 */
+Promise.prototype.finally = function (callback) {
+    var Promise = this.constructor;
+    return this.then(
+      function (value) {
+        Promise.resolve(callback()).then(
+          function () {
+            return value;
+          }
+        );
+      },
+      function (reason) {
+        Promise.resolve(callback()).then(
+          function () {
+            throw reason;
+          }
+        );
+      }
+    );
+}
