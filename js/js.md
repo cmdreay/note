@@ -25,7 +25,7 @@ s.item = 'new'; // 调用 set
 function test() {
   this.context = ['data1']
 }
-test.prototype.param = funciton () {
+test.prototype.param = function () {
   return 'some data'
 }
 test.staticfunc = function () {
