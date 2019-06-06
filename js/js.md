@@ -19,3 +19,16 @@ let s = {
 s.item; // 调用 get
 s.item = 'new'; // 调用 set
 ```
+
+//  js静态方法命名
+```javascript
+function test() {
+  this.context = ['data1']
+}
+test.prototype.param = funciton () {
+  return 'some data'
+}
+test.staticfunc = function () {
+  return 'other data'
+}
+```
