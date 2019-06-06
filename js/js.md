@@ -20,7 +20,7 @@ s.item; // 调用 get
 s.item = 'new'; // 调用 set
 ```
 
-//  js静态方法命名
+//  js静态方法|变量命名
 ```javascript
 function test() {
   this.context = ['data1']
@@ -32,3 +32,9 @@ test.staticfunc = function () {
   return 'other data'
 }
 ```
++ js call apply bind 重温
+  + [call方法MDN定义](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Function/call)
+  + call和apply的区别在于:`call() 方法接受的是一个参数列表，而 apply() 方法接受的是一个包含多个参数的数组`
+  
+ >call() 允许为不同的对象分配和调用属于一个对象的函数/方法。
+ >call() 提供新的 this 值给当前调用的函数/方法。你可以使用 call 来实现继承：写一个方法，然后让另外一个新的对象来继承它（而不是在新对象中再写一次这个方法）。
