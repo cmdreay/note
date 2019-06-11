@@ -40,3 +40,5 @@ test.staticfunc = function () {
  >call() 提供新的 this 值给当前调用的函数/方法。你可以使用 call 来实现继承：写一个方法，然后让另外一个新的对象来继承它（而不是在新对象中再写一次这个方法）。
  
  + bind `bind()方法创建一个新的函数，在调用时设置this关键字为提供的值。并在调用新函数时，将给定参数列表作为原函数的参数序列的前若干项`，就是说传入值就是方法中的this指向
+ > 参考：https://www.cnblogs.com/coco1s/p/4833199.html
+ + tips 伪数组调用数组方法:如arguments想使用slice方法`Array.prototype.slice.call(arguments)`
