@@ -1,6 +1,6 @@
 **`https://nodejs.org/api/events.html`学习笔记**
 
-+ events
+> events
 + node.js使用事件驱动性模型，异步io
 + 许多node核心方法都是基于事件驱动的，他们继承`EventEmitter`类
 + 监听器中的`this`指向当前事件，es6箭头函数会导致this不指向当前事件本身
