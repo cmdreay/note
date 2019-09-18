@@ -1,6 +1,7 @@
 ### note索引
 + [node异步相关](./node/node异步相关.md)
 + [模块相关](https://github.com/cmdreay/note/issues/21)
++ [node 核心api学习](./node/nodeLearning.md)
 #### 近期要做的事情
 
 - koa 源码
