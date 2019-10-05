@@ -10,3 +10,12 @@
 + `EventEmitter.defaultMaxListeners`：一个事件默认能注册10个监听器，可以通过`emitter.setMaxListeners(n)`修改监听器数量限制。`EventEmitter.defaultMaxListeners`值可以修改，但需要注意的是该数量一旦修改影响所有注册事件，tips:`EventEmitter.defaultMaxListeners`数量不是强制限制，超出会内存泄漏警告
 + `emitter.on`,每添加一个监听事件都会作为结果添加到下一个监听事件中,默认根据添加顺序决定触发监听事件的顺序，但`emitter.prependListener()`方法提前触发
 + `removeListener()`在`emit()`触发后并不会影响监听器的触发,只会移除指定的监听器
+
+> fs模块
++ process.cwd()表示当前正在执行操作的文件夹
++ fs支持URL对象表示的路径，比如`new URL('file:///tmp/hello')`,但是URL对象表示的都是绝对路径
++ 注意在Windows开发中调用fs时,文件路径不同于linux(`/git/gitfile/test/`)等其他写法，Windows为`d:\\git\\gitfile\\test\\`
+
++ fs.access && fs.accessSync 查看文件权限，如读写权限，默认查找文件是否存在，该方法不建议作为文件读写执行前置条件判断。
++ fs.appendFile 文件插入数据，默认不存在则新建文件，第二个参数插入的各种flag参考[File System Flags](https://nodejs.org/api/fs.html#fs_file_system_flags)
++ 看到 fs.chmod(path, mode, callback)
