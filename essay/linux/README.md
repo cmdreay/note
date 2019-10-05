@@ -1,4 +1,7 @@
-## new
+### ubuntu版本linux小工具
+zsh on-my-zsh
+autojump
+
 
 ### 日常用到的命令 
 + netstat -ano  查看占用端口号
