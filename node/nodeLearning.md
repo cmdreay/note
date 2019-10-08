@@ -18,4 +18,7 @@
 
 + fs.access && fs.accessSync 查看文件权限，如读写权限，默认查找文件是否存在，该方法不建议作为文件读写执行前置条件判断。
 + fs.appendFile 文件插入数据，默认不存在则新建文件，第二个参数插入的各种flag参考[File System Flags](https://nodejs.org/api/fs.html#fs_file_system_flags)
-+ 看到 fs.chmod(path, mode, callback)
++ fs.chmod(path, mode, callback) | chmodSync，修改某个文件的权限，[包含的modes](https://nodejs.org/api/fs.html#fs_file_modes)，通常用三位数字表示对应权限，e.g:`765`,最左侧7位置代表文件所有者权限，中间的6代表所在用户组权限，最右5代表别的用户的权限。
++ fs.chown | chownSync 修改所有者和所在组
++ fs.copyFile(src, dest[, flags], callback)拷贝文件，默认覆盖目标位置相同文件，如果在打开目标文件进行写入后发生错误，Node.js将尝试删除目标(nodejs不能保证操作的原子性)。
++ FS Constants[文件操作相关常量](https://nodejs.org/api/fs.html#fs_fs_constants_1)
