@@ -30,7 +30,7 @@
 - [es6 MAP 数据结构](https://github.com/cmdreay/note/blob/master/essay/node/day12_12.md)
 - [原生的一些判断](https://github.com/cmdreay/note/blob/master/essay/es6/day4_24.md)
 - [js 基础知识温习](./js/js.md)
-
+- [学习一下LeetCode上的算法，弥补一下这方面的缺陷](./leetcode)
 ### redis
 
 - TTL key 查看过期时间
